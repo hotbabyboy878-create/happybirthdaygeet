@@ -239,6 +239,7 @@ button{
         Write your full long birthday message here… scrollable page for all your wishes!
       </p>
     </div>
+    <button onclick="goBackToStart()">⬅ Go Back</button>
   </div>
 </div>
 
@@ -294,6 +295,18 @@ function confetti(){
     document.body.appendChild(c);
     setTimeout(()=>c.remove(),4000);
   }
+}
+
+function goBackToStart(){
+  page3.classList.add("hidden");
+  page1.classList.remove("hidden");
+  // reset cake/knife for replay
+  blown=false;
+  flame.style.display="block";
+  knife.style.display="none";
+  cutBtn.classList.add("hidden");
+  music2.pause();
+  music1.currentTime = 0;
 }
 </script>
 
