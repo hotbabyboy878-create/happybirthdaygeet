@@ -11,10 +11,9 @@ body{
   height:100vh;
   font-family:Georgia, serif;
   background: radial-gradient(circle at top, #ffe1ec, #ff6f9f);
-  overflow:hidden; /* no scroll globally */
+  overflow:hidden;
 }
 
-/* CENTER SCREENS */
 .screen{
   height:100vh;
   display:flex;
@@ -48,7 +47,7 @@ button{
 
 .hidden{display:none}
 
-/* 🎂 BETTER CAKE */
+/* 🎂 CAKE */
 .cake{
   position:relative;
   width:260px;
@@ -66,18 +65,6 @@ button{
   height:22px;
   background:#fff;
   border-radius:0 0 20px 20px;
-  position:relative;
-}
-
-.drip::after{
-  content:"";
-  position:absolute;
-  left:20px;
-  top:16px;
-  width:30px;
-  height:20px;
-  background:#fff;
-  border-radius:0 0 15px 15px;
 }
 
 .plate{
@@ -123,17 +110,18 @@ button{
   animation:flicker .25s infinite;
 }
 
-/* 🔪 KNIFE */
+/* 🔪 PROPER KNIFE (TOP-DOWN) */
 .knife{
   position:absolute;
-  right:-150px;
-  top:110px;
-  width:140px;
-  height:12px;
-  background:#ddd;
+  top:-160px;
+  left:50%;
+  transform:translateX(-50%);
+  width:12px;
+  height:140px;
+  background:linear-gradient(#ddd,#aaa);
   border-radius:6px;
   display:none;
-  animation:cut 2s forwards;
+  animation:cutDown 2s ease forwards;
 }
 
 /* 🎊 CONFETTI */
@@ -152,7 +140,6 @@ button{
   text-align:left;
   line-height:1.8;
   color:#5a1a2c;
-  padding-right:8px;
 }
 
 /* ANIMATIONS */
@@ -169,8 +156,8 @@ button{
   50%{transform:translateX(-50%) scale(.85)}
   100%{transform:translateX(-50%) scale(1)}
 }
-@keyframes cut{
-  to{right:40px}
+@keyframes cutDown{
+  to{top:120px}
 }
 @keyframes fall{
   to{transform:translateY(120vh) rotate(360deg)}
@@ -214,7 +201,7 @@ button{
       <div class="knife" id="knife"></div>
     </div>
 
-    <p id="hint">Blow into your mic 🎤</p>
+    <p>Blow into your mic 🎤</p>
     <button id="cutBtn" class="hidden" onclick="cutCake()">Cut the Cake 🎂</button>
   </div>
 </div>
@@ -225,10 +212,7 @@ button{
     <h2>💖 For You</h2>
     <div class="message-box">
       <p>
-        <!-- WRITE YOUR LONG MESSAGE HERE -->
-        Happy Birthday Geet ❤️  
-        This page is scrollable.  
-        Write everything you want here without limits.
+        Write your long birthday message here ❤️
       </p>
     </div>
   </div>
