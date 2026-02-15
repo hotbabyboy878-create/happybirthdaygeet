@@ -2,23 +2,30 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday Geet Rani 🎂</title>
+<title>Happy Birthday Geet 🎂</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body {
   margin:0;
   font-family:Georgia, serif;
-  overflow:hidden;
   background: radial-gradient(circle at top, #ffe1ec, #ff6f9f);
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
 }
 
 /* COMMON CARD */
 .screen {
-  height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
+  width:100%;
+  height:100%;
+  flex-direction:row; /* horizontal layout */
+  flex-wrap:wrap;
 }
 
 .card {
@@ -26,11 +33,12 @@ body {
   backdrop-filter:blur(18px);
   padding:36px;
   border-radius:36px;
-  width:90%;
   max-width:420px;
+  width:90%;
   text-align:center;
   box-shadow:0 40px 80px rgba(200,70,120,0.4);
   animation:fadeIn 1s ease;
+  margin:12px;
 }
 
 button {
@@ -75,26 +83,29 @@ button {
   to {opacity:1; transform:scale(1);}
 }
 
-/* CAKE */
+/* REALISTIC 3D LOOKING CAKE */
 .cake{
   position:relative;
   width:280px;
   margin:30px auto 20px;
+  perspective:800px;
 }
 
 /* TOP LAYER */
 .top{
   position:relative;
-  height:70px;
-  background:linear-gradient(to right,#ff9ebc,#ff6f9f);
-  border-radius:30px 30px 20px 20px;
-  box-shadow:inset 0 -6px rgba(255,255,255,0.3);
+  height:80px;
+  background:linear-gradient(to bottom,#ffb3c6,#ff6f9f);
+  border-radius:35px 35px 20px 20px;
+  box-shadow:inset 0 -6px rgba(255,255,255,0.3),
+             0 10px 20px rgba(0,0,0,0.2);
+  transform:rotateX(5deg);
 }
 
 /* NAME ON CAKE */
 .name{
   position:absolute;
-  top:18px;
+  top:25px;
   width:100%;
   text-align:center;
   font-size:26px;
@@ -116,12 +127,13 @@ button {
 .drips span:nth-child(3){left:150px;height:24px}
 .drips span:nth-child(4){left:200px;height:28px}
 
-/* BODY */
+/* BODY LAYER */
 .body{
-  height:120px;
-  background:linear-gradient(to right,#6b3f2a,#4a2c1f);
+  height:130px;
+  background:linear-gradient(to right,#a0522d,#6b3f2a);
   border-radius:0 0 30px 30px;
   box-shadow:inset 0 -10px rgba(0,0,0,0.15);
+  transform:rotateX(3deg);
 }
 
 /* STAND */
@@ -140,7 +152,7 @@ button {
   top:-65px;
   left:50%;
   transform:translateX(-50%);
-  width:18px;
+  width:20px;
   height:60px;
   background:linear-gradient(#ffe066,#ffb703);
   border-radius:10px;
@@ -149,11 +161,11 @@ button {
 
 .flame{
   position:absolute;
-  top:-32px;
+  top:-35px;
   left:50%;
   transform:translateX(-50%);
-  width:26px;
-  height:36px;
+  width:28px;
+  height:38px;
   background:radial-gradient(circle,#fff7cc,#ff7b00);
   border-radius:50%;
   animation:flicker .25s infinite;
@@ -162,11 +174,11 @@ button {
 /* KNIFE */
 .knife{
   position:absolute;
-  top:-160px;
+  top:-180px;
   left:50%;
   transform:translateX(-50%);
-  width:12px;
-  height:140px;
+  width:14px;
+  height:150px;
   background:linear-gradient(#eee,#aaa);
   border-radius:6px;
   display:none;
@@ -260,9 +272,9 @@ button {
   <div class="card">
     <h2>💖 For You</h2>
     <div class="message-box">
-      <p>Happy Birthday Geet ❤️ Write your long heartfelt wishes here… scrollable for all messages!</p>
+      <p>Happy Birthday Geet ❤️ Write your full heartfelt wishes here…</p>
     </div>
-    <button onclick="goBackToStart()">⬅ Go Back</button>
+    <button id="nextBtn">Next ➡</button>
   </div>
 </div>
 
@@ -342,21 +354,6 @@ function confetti(){
     document.body.appendChild(c);
     setTimeout(()=>c.remove(),4000);
   }
-}
-
-// Go back to start
-function goBackToStart(){
-  page3.classList.add("hidden");
-  page1.classList.remove("hidden");
-  countdown=3;
-  countdownEl.innerText=countdown;
-  blown=false;
-  document.getElementById("flame").style.display="block";
-  document.getElementById("knife").style.display="none";
-  document.getElementById("cutBtn").classList.add("hidden");
-  music2.pause();
-  music1.currentTime=0;
-  startCountdown();
 }
 </script>
 
