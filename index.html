@@ -2,195 +2,254 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday 🎂</title>
+<title>Happy Birthday Geet 🎂</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: "Georgia", serif;
-  background: linear-gradient(135deg, #ffd3a5, #fd6585);
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Georgia, serif;
+  background: radial-gradient(circle at top, #ffe3ec, #ff6f9f);
+  overflow-x:hidden;
 }
 
-/* CENTER FIRST SCREEN */
-.center {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.center{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-/* SCROLL SCREEN */
-.scroll {
-  display: flex;
-  justify-content: center;
-  padding: 40px 0;
+.card{
+  background:rgba(255,255,255,0.45);
+  backdrop-filter:blur(18px);
+  padding:36px;
+  border-radius:36px;
+  width:90%;
+  max-width:420px;
+  text-align:center;
+  box-shadow:0 40px 80px rgba(200,70,120,0.4);
+  animation:fadeIn 1s ease;
 }
 
-.card {
-  background: rgba(255,255,255,0.45);
-  backdrop-filter: blur(14px);
-  padding: 36px;
-  border-radius: 32px;
-  max-width: 420px;
-  width: 90%;
-  text-align: center;
-  color: #6b1f33;
-  box-shadow: 0 30px 60px rgba(200,80,100,0.3);
-  animation: fadeIn 1s ease;
-  position: relative;
+button{
+  width:100%;
+  margin-top:24px;
+  padding:16px;
+  border:none;
+  border-radius:40px;
+  font-size:17px;
+  background:linear-gradient(135deg,#ff4f9a,#ff85b3);
+  color:white;
+  cursor:pointer;
 }
 
-h1 {
-  font-weight: normal;
-  color: #8b1e3f;
-}
-
-button {
-  width: 100%;
-  margin-top: 20px;
-  padding: 16px;
-  border-radius: 30px;
-  border: none;
-  background: linear-gradient(to right, #ff7a7a, #ffb199);
-  color: white;
-  font-size: 17px;
-  cursor: pointer;
-}
-
-.hidden {
-  display: none;
-}
+.hidden{display:none}
 
 /* 🎂 CAKE */
-.cake {
-  margin: 30px auto;
-  width: 200px;
-  height: 120px;
-  background: #ffb6c1;
-  border-radius: 0 0 20px 20px;
-  position: relative;
+.cake{
+  position:relative;
+  width:240px;
+  margin:40px auto;
 }
 
-.cake::before {
-  content: "";
-  position: absolute;
-  top: -30px;
-  left: 0;
-  width: 200px;
-  height: 40px;
-  background: #fff;
-  border-radius: 20px;
+.layer{
+  height:55px;
+  background:linear-gradient(to right,#ffb3c6,#ff7aa2);
+  border-radius:22px;
+  margin-bottom:6px;
+}
+
+.icing{
+  height:28px;
+  background:#fff;
+  border-radius:22px;
+  margin-bottom:6px;
+}
+
+/* 💖 NAME */
+.name{
+  position:absolute;
+  top:12px;
+  width:100%;
+  text-align:center;
+  font-size:24px;
+  color:#ff2f92;
+  text-shadow:0 0 12px #ff2f92;
+  animation:glow 1.6s infinite alternate;
 }
 
 /* 🕯️ CANDLE */
-.candle {
-  position: absolute;
-  top: -60px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 12px;
-  height: 40px;
-  background: #ffd700;
-  border-radius: 6px;
+.candle{
+  position:absolute;
+  top:-60px;
+  left:50%;
+  transform:translateX(-50%);
+  width:16px;
+  height:50px;
+  background:linear-gradient(#ffd700,#ffb700);
+  border-radius:10px;
 }
 
-.flame {
-  width: 16px;
-  height: 22px;
-  background: orange;
-  border-radius: 50%;
-  position: absolute;
-  top: -22px;
-  left: 50%;
-  transform: translateX(-50%);
-  animation: flicker 0.3s infinite;
-  cursor: pointer;
+.flame{
+  position:absolute;
+  top:-30px;
+  left:50%;
+  transform:translateX(-50%);
+  width:20px;
+  height:28px;
+  background:radial-gradient(circle,#fff6b5,#ff8c00);
+  border-radius:50%;
+  animation:flicker 0.25s infinite;
 }
 
-@keyframes flicker {
-  0% { transform: translateX(-50%) scale(1); }
-  50% { transform: translateX(-50%) scale(1.1); }
-  100% { transform: translateX(-50%) scale(1); }
+/* 🔪 KNIFE */
+.knife{
+  position:absolute;
+  right:-120px;
+  top:60px;
+  width:100px;
+  height:10px;
+  background:#ccc;
+  border-radius:6px;
+  animation:cut 2s ease forwards;
+  display:none;
 }
 
-/* 🍰 SLICE */
-.slice {
-  width: 200px;
-  height: 120px;
-  background: #ffc0cb;
-  border-radius: 0 0 20px 20px;
-  margin: 20px auto;
+/* 🎊 CONFETTI */
+.confetti{
+  position:fixed;
+  top:-10px;
+  width:10px;
+  height:14px;
+  animation:fall 4s linear forwards;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+/* ANIMATIONS */
+@keyframes fadeIn{
+  from{opacity:0;transform:scale(.95)}
+  to{opacity:1;transform:scale(1)}
+}
+
+@keyframes glow{
+  from{text-shadow:0 0 10px #ff2f92}
+  to{text-shadow:0 0 25px #ff2f92}
+}
+
+@keyframes flicker{
+  0%{transform:translateX(-50%) scale(1)}
+  50%{transform:translateX(-50%) scale(0.85)}
+  100%{transform:translateX(-50%) scale(1)}
+}
+
+@keyframes cut{
+  to{right:60px}
+}
+
+@keyframes fall{
+  to{transform:translateY(120vh) rotate(360deg)}
 }
 </style>
 </head>
 
 <body>
 
-<audio id="music" loop>
-  <source src="birthday-music.mp3" type="audio/mpeg">
+<audio id="music1" loop>
+  <source src="calm.mp3" type="audio/mpeg">
 </audio>
 
-<!-- FIRST SCREEN -->
+<audio id="music2">
+  <source src="celebration.mp3" type="audio/mpeg">
+</audio>
+
 <div class="center" id="start">
   <div class="card">
-    <h1>🎉 Happy Birthday Geet Rani 🎂</h1>
-    <button onclick="openCard()">Tap to open 🎁</button>
+    <h1>🎉 Happy Birthday Geet 🎉</h1>
+    <p>Tap to open your surprise 🎂</p>
+    <button onclick="start()">Open</button>
   </div>
 </div>
 
-<!-- SECOND SCREEN -->
-<div class="scroll hidden" id="message">
+<div class="center hidden" id="main">
   <div class="card">
+    <h2>Blow the candle 🕯️</h2>
 
-    <h2>Make a wish ✨</h2>
-
-    <div class="cake" id="cake">
+    <div class="cake">
+      <div class="name">Geet 💖</div>
       <div class="candle">
-        <div class="flame" id="flame" onclick="blowCandle()"></div>
+        <div class="flame" id="flame"></div>
       </div>
+
+      <div class="icing"></div>
+      <div class="layer"></div>
+      <div class="icing"></div>
+      <div class="layer"></div>
+
+      <div class="knife" id="knife"></div>
     </div>
 
-    <p id="candleText">Tap the flame to blow the candle 🕯️</p>
-
-    <button id="cutBtn" class="hidden" onclick="cutCake()">Cut the cake 🎂</button>
-
-    <div id="cakeSlice" class="hidden">
-      <div class="slice"></div>
-      <p>🍰 Cake is cut! May all your wishes come true 💗</p>
-    </div>
-
+    <p id="hint">Blow into your mic 🎤</p>
   </div>
 </div>
 
 <script>
-function openCard() {
+let blown=false;
+let audioCtx, analyser, mic;
+
+function start(){
   document.getElementById("start").classList.add("hidden");
-  document.getElementById("message").classList.remove("hidden");
-
-  const music = document.getElementById("music");
-  music.volume = 0.4;
-  music.play().catch(() => {});
+  document.getElementById("main").classList.remove("hidden");
+  document.getElementById("music1").play();
+  startMic();
 }
 
-function blowCandle() {
-  const flame = document.getElementById("flame");
-  flame.style.display = "none";
-  document.getElementById("candleText").innerText =
-    "🎉 Candle blown! Your wish is on the way…";
-  document.getElementById("cutBtn").classList.remove("hidden");
+function startMic(){
+  navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+    audioCtx=new AudioContext();
+    analyser=audioCtx.createAnalyser();
+    mic=audioCtx.createMediaStreamSource(stream);
+    mic.connect(analyser);
+    analyser.fftSize=256;
+    detectBlow();
+  });
 }
 
-function cutCake() {
-  document.getElementById("cake").style.display = "none";
-  document.getElementById("cutBtn").style.display = "none";
-  document.getElementById("cakeSlice").classList.remove("hidden");
+function detectBlow(){
+  const data=new Uint8Array(analyser.frequencyBinCount);
+  function check(){
+    analyser.getByteFrequencyData(data);
+    let volume=data.reduce((a,b)=>a+b)/data.length;
+    if(volume>60 && !blown){
+      blown=true;
+      candleOut();
+    }
+    requestAnimationFrame(check);
+  }
+  check();
+}
+
+function candleOut(){
+  document.getElementById("flame").style.display="none";
+  document.getElementById("music1").pause();
+  document.getElementById("music2").play();
+  confetti();
+  setTimeout(cutCake,1200);
+}
+
+function cutCake(){
+  document.getElementById("knife").style.display="block";
+}
+
+function confetti(){
+  for(let i=0;i<80;i++){
+    let c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=`hsl(${Math.random()*360},100%,60%)`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4000);
+  }
 }
 </script>
 
