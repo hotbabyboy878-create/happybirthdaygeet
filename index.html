@@ -8,22 +8,20 @@
 <style>
 body{
   margin:0;
-  min-height:100vh;
+  height:100vh;
   font-family:Georgia, serif;
   background: radial-gradient(circle at top, #ffe1ec, #ff6f9f);
-  overflow-x:hidden;
+  overflow:hidden; /* no scroll globally */
 }
 
 /* CENTER SCREENS */
-.center{
-  min-height:100vh;
+.screen{
+  height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:30px 0;
 }
 
-/* CARD */
 .card{
   background:rgba(255,255,255,0.45);
   backdrop-filter:blur(18px);
@@ -36,7 +34,6 @@ body{
   animation:fadeIn 1s ease;
 }
 
-/* BUTTONS */
 button{
   width:100%;
   margin-top:24px;
@@ -51,59 +48,77 @@ button{
 
 .hidden{display:none}
 
-/* 🎂 CAKE */
+/* 🎂 BETTER CAKE */
 .cake{
   position:relative;
-  width:240px;
-  margin:50px auto 20px;
+  width:260px;
+  margin:60px auto 20px;
 }
 
 .layer{
   height:55px;
   background:linear-gradient(to right,#ffb3c6,#ff7aa2);
-  border-radius:22px;
-  margin-bottom:6px;
+  border-radius:26px;
+  margin-bottom:8px;
 }
 
-.icing{
-  height:28px;
+.drip{
+  height:22px;
   background:#fff;
-  border-radius:22px;
-  margin-bottom:6px;
+  border-radius:0 0 20px 20px;
+  position:relative;
 }
 
-/* 💖 NAME ON CAKE */
+.drip::after{
+  content:"";
+  position:absolute;
+  left:20px;
+  top:16px;
+  width:30px;
+  height:20px;
+  background:#fff;
+  border-radius:0 0 15px 15px;
+}
+
+.plate{
+  height:18px;
+  background:#eee;
+  border-radius:50%;
+  margin-top:6px;
+}
+
+/* 💖 NAME */
 .name{
   position:absolute;
-  top:18px;
+  top:22px;
   width:100%;
   text-align:center;
-  font-size:24px;
+  font-size:26px;
   color:#ff2f92;
-  text-shadow:0 0 14px #ff2f92;
+  text-shadow:0 0 18px #ff2f92;
   animation:glow 1.6s infinite alternate;
 }
 
 /* 🕯️ CANDLE */
 .candle{
   position:absolute;
-  top:-65px;
+  top:-70px;
   left:50%;
   transform:translateX(-50%);
   width:18px;
-  height:55px;
+  height:60px;
   background:linear-gradient(#ffe066,#ffb703);
   border-radius:10px;
 }
 
 .flame{
   position:absolute;
-  top:-30px;
+  top:-32px;
   left:50%;
   transform:translateX(-50%);
-  width:22px;
-  height:30px;
-  background:radial-gradient(circle,#fff4c2,#ff7b00);
+  width:24px;
+  height:34px;
+  background:radial-gradient(circle,#fff7cc,#ff7b00);
   border-radius:50%;
   animation:flicker .25s infinite;
 }
@@ -111,10 +126,10 @@ button{
 /* 🔪 KNIFE */
 .knife{
   position:absolute;
-  right:-130px;
-  top:90px;
-  width:120px;
-  height:10px;
+  right:-150px;
+  top:110px;
+  width:140px;
+  height:12px;
   background:#ddd;
   border-radius:6px;
   display:none;
@@ -130,13 +145,14 @@ button{
   animation:fall 4s linear forwards;
 }
 
-/* MESSAGE PAGE */
-.message{
-  max-height:60vh;
+/* 📜 MESSAGE PAGE */
+.message-box{
+  max-height:65vh;
   overflow-y:auto;
   text-align:left;
-  line-height:1.7;
+  line-height:1.8;
   color:#5a1a2c;
+  padding-right:8px;
 }
 
 /* ANIMATIONS */
@@ -146,7 +162,7 @@ button{
 }
 @keyframes glow{
   from{text-shadow:0 0 10px #ff2f92}
-  to{text-shadow:0 0 26px #ff2f92}
+  to{text-shadow:0 0 30px #ff2f92}
 }
 @keyframes flicker{
   0%{transform:translateX(-50%) scale(1)}
@@ -154,7 +170,7 @@ button{
   100%{transform:translateX(-50%) scale(1)}
 }
 @keyframes cut{
-  to{right:60px}
+  to{right:40px}
 }
 @keyframes fall{
   to{transform:translateY(120vh) rotate(360deg)}
@@ -164,16 +180,11 @@ button{
 
 <body>
 
-<!-- MUSIC -->
-<audio id="music1" loop>
-  <source src="calm.mp3" type="audio/mpeg">
-</audio>
-<audio id="music2">
-  <source src="celebration.mp3" type="audio/mpeg">
-</audio>
+<audio id="music1" loop src="calm.mp3"></audio>
+<audio id="music2" src="celebration.mp3"></audio>
 
-<!-- START -->
-<div class="center" id="start">
+<!-- PAGE 1 -->
+<div class="screen" id="page1">
   <div class="card">
     <h1>🎉 Happy Birthday Geet 🎉</h1>
     <p>Tap to open 🎂</p>
@@ -181,8 +192,8 @@ button{
   </div>
 </div>
 
-<!-- CAKE -->
-<div class="center hidden" id="cakePage">
+<!-- PAGE 2 -->
+<div class="screen hidden" id="page2">
   <div class="card">
     <h2>Blow the candle 🕯️</h2>
 
@@ -193,10 +204,12 @@ button{
         <div class="flame" id="flame"></div>
       </div>
 
-      <div class="icing"></div>
+      <div class="drip"></div>
       <div class="layer"></div>
-      <div class="icing"></div>
+      <div class="drip"></div>
       <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="plate"></div>
 
       <div class="knife" id="knife"></div>
     </div>
@@ -206,35 +219,32 @@ button{
   </div>
 </div>
 
-<!-- MESSAGE PAGE -->
-<div class="center hidden" id="messagePage">
+<!-- PAGE 3 -->
+<div class="screen hidden" id="page3">
   <div class="card">
     <h2>💖 For You</h2>
-    <div class="message">
+    <div class="message-box">
       <p>
-        <!-- WRITE YOUR MESSAGE HERE -->
+        <!-- WRITE YOUR LONG MESSAGE HERE -->
         Happy Birthday Geet ❤️  
-        (Write your full message here…)
+        This page is scrollable.  
+        Write everything you want here without limits.
       </p>
     </div>
   </div>
 </div>
 
 <script>
-let blown=false, audioCtx, analyser, mic;
+let blown=false, audioCtx, analyser;
 
 function openCake(){
-  start.style.display="none";
-  cakePage.classList.remove("hidden");
+  page1.classList.add("hidden");
+  page2.classList.remove("hidden");
   music1.play();
-  startMic();
-}
-
-function startMic(){
   navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
     audioCtx=new AudioContext();
     analyser=audioCtx.createAnalyser();
-    mic=audioCtx.createMediaStreamSource(stream);
+    const mic=audioCtx.createMediaStreamSource(stream);
     mic.connect(analyser);
     analyser.fftSize=256;
     detectBlow();
@@ -245,34 +255,30 @@ function detectBlow(){
   const data=new Uint8Array(analyser.frequencyBinCount);
   function check(){
     analyser.getByteFrequencyData(data);
-    let volume=data.reduce((a,b)=>a+b)/data.length;
-    if(volume>60 && !blown){
+    let vol=data.reduce((a,b)=>a+b)/data.length;
+    if(vol>60 && !blown){
       blown=true;
-      candleOut();
+      flame.style.display="none";
+      music1.pause();
+      music2.play();
+      confetti();
+      cutBtn.classList.remove("hidden");
     }
     requestAnimationFrame(check);
   }
   check();
 }
 
-function candleOut(){
-  flame.style.display="none";
-  music1.pause();
-  music2.play();
-  confetti();
-  cutBtn.classList.remove("hidden");
-}
-
 function cutCake(){
   knife.style.display="block";
   setTimeout(()=>{
-    cakePage.style.display="none";
-    messagePage.classList.remove("hidden");
+    page2.classList.add("hidden");
+    page3.classList.remove("hidden");
   },2000);
 }
 
 function confetti(){
-  for(let i=0;i<80;i++){
+  for(let i=0;i<90;i++){
     let c=document.createElement("div");
     c.className="confetti";
     c.style.left=Math.random()*100+"vw";
