@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday 🎂</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  font-family: "Georgia", serif;
+  background: linear-gradient(135deg, #ffd3a5, #fd6585);
+  padding: 40px 0;
+}
+
+.card {
+  position: relative;
+  background: rgba(255,255,255,0.4);
+  backdrop-filter: blur(14px);
+  padding: 36px;
+  border-radius: 32px;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  color: #6b1f33;
+  box-shadow: 0 30px 60px rgba(200,80,100,0.3);
+  animation: fadeIn 1.2s ease;
+  margin-bottom: 40px;
+  z-index: 2;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 32px;
+  box-shadow: 0 0 80px rgba(255,150,180,0.6);
+  z-index: -1;
+}
+
+h1 {
+  font-weight: normal;
+  color: #8b1e3f;
+}
+
+h2 {
+  font-weight: normal;
+  margin-bottom: 24px;
+}
+
+p {
+  line-height: 1.8;
+  margin-bottom: 20px;
+  color: #5a1a2c;
+  text-align: left;
+}
+
+button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 16px 22px;
+  border-radius: 32px;
+  border: none;
+  background: linear-gradient(to right, #ff7a7a, #ffb199);
+  color: white;
+  font-size: 17px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 12px 24px rgba(255,100,130,0.4);
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+.hidden {
+  display: none;
+}
+
+.balloon {
+  position: fixed;
+  bottom: -30px;
+  font-size: 26px;
+  animation: floatUp 7s linear forwards;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0); }
+  to { transform: translateY(-120vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop preload="auto">
+  <source src="birthday-music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- FIRST SCREEN -->
+<div class="card" id="start">
+  <h1>🎉 Happy Birthday Geet 🎂</h1>
+  <h2>Today is all about you</h2>
+  <button onclick="openCard()">Tap to open 🎁</button>
+</div>
+
+<!-- MESSAGE SCREEN -->
+<div class="card hidden" id="message">
+  <p>
+    On your special day, I just want to wish you happiness,
+    peace, and everything beautiful that life can give.
+  </p>
+
+  <p>
+    You have a way of making moments brighter just by being there.
+    I hope this year brings you smiles, success, and calm days.
+  </p>
+
+  <p>
+    Never stop being the kind, quiet, and beautiful person you are.
+    The world feels a little better with you in it.
+  </p>
+
+  <p>
+    Happy Birthday once again, Geet 🎂💗
+  </p>
+</div>
+
+<script>
+let balloonsStarted = false;
+
+function openCard() {
+  document.getElementById("start").style.display = "none";
+  document.getElementById("message").style.display = "block";
+
+  const music = document.getElementById("music");
+  music.volume = 0.4;
+  music.play().catch(() => {});
+
+  if (!balloonsStarted) {
+    startBalloons();
+    balloonsStarted = true;
+  }
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function startBalloons() {
+  setInterval(() => {
+    const balloon = document.createElement("div");
+    balloon.className = "balloon";
+    balloon.innerText = "🎈";
+    balloon.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(balloon);
+    setTimeout(() => balloon.remove(), 7000);
+  }, 600);
+}
+</script>
+
+</body>
+</html>
