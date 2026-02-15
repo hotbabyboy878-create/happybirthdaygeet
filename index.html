@@ -10,17 +10,20 @@ body{
   margin:0;
   min-height:100vh;
   font-family:Georgia, serif;
-  background: radial-gradient(circle at top, #ffe3ec, #ff6f9f);
+  background: radial-gradient(circle at top, #ffe1ec, #ff6f9f);
   overflow-x:hidden;
 }
 
+/* CENTER SCREENS */
 .center{
-  height:100vh;
+  min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
+  padding:30px 0;
 }
 
+/* CARD */
 .card{
   background:rgba(255,255,255,0.45);
   backdrop-filter:blur(18px);
@@ -33,6 +36,7 @@ body{
   animation:fadeIn 1s ease;
 }
 
+/* BUTTONS */
 button{
   width:100%;
   margin-top:24px;
@@ -51,7 +55,7 @@ button{
 .cake{
   position:relative;
   width:240px;
-  margin:40px auto;
+  margin:50px auto 20px;
 }
 
 .layer{
@@ -68,27 +72,27 @@ button{
   margin-bottom:6px;
 }
 
-/* 💖 NAME */
+/* 💖 NAME ON CAKE */
 .name{
   position:absolute;
-  top:12px;
+  top:18px;
   width:100%;
   text-align:center;
   font-size:24px;
   color:#ff2f92;
-  text-shadow:0 0 12px #ff2f92;
+  text-shadow:0 0 14px #ff2f92;
   animation:glow 1.6s infinite alternate;
 }
 
 /* 🕯️ CANDLE */
 .candle{
   position:absolute;
-  top:-60px;
+  top:-65px;
   left:50%;
   transform:translateX(-50%);
-  width:16px;
-  height:50px;
-  background:linear-gradient(#ffd700,#ffb700);
+  width:18px;
+  height:55px;
+  background:linear-gradient(#ffe066,#ffb703);
   border-radius:10px;
 }
 
@@ -97,24 +101,24 @@ button{
   top:-30px;
   left:50%;
   transform:translateX(-50%);
-  width:20px;
-  height:28px;
-  background:radial-gradient(circle,#fff6b5,#ff8c00);
+  width:22px;
+  height:30px;
+  background:radial-gradient(circle,#fff4c2,#ff7b00);
   border-radius:50%;
-  animation:flicker 0.25s infinite;
+  animation:flicker .25s infinite;
 }
 
 /* 🔪 KNIFE */
 .knife{
   position:absolute;
-  right:-120px;
-  top:60px;
-  width:100px;
+  right:-130px;
+  top:90px;
+  width:120px;
   height:10px;
-  background:#ccc;
+  background:#ddd;
   border-radius:6px;
-  animation:cut 2s ease forwards;
   display:none;
+  animation:cut 2s forwards;
 }
 
 /* 🎊 CONFETTI */
@@ -126,27 +130,32 @@ button{
   animation:fall 4s linear forwards;
 }
 
+/* MESSAGE PAGE */
+.message{
+  max-height:60vh;
+  overflow-y:auto;
+  text-align:left;
+  line-height:1.7;
+  color:#5a1a2c;
+}
+
 /* ANIMATIONS */
 @keyframes fadeIn{
   from{opacity:0;transform:scale(.95)}
   to{opacity:1;transform:scale(1)}
 }
-
 @keyframes glow{
   from{text-shadow:0 0 10px #ff2f92}
-  to{text-shadow:0 0 25px #ff2f92}
+  to{text-shadow:0 0 26px #ff2f92}
 }
-
 @keyframes flicker{
   0%{transform:translateX(-50%) scale(1)}
-  50%{transform:translateX(-50%) scale(0.85)}
+  50%{transform:translateX(-50%) scale(.85)}
   100%{transform:translateX(-50%) scale(1)}
 }
-
 @keyframes cut{
   to{right:60px}
 }
-
 @keyframes fall{
   to{transform:translateY(120vh) rotate(360deg)}
 }
@@ -155,28 +164,31 @@ button{
 
 <body>
 
+<!-- MUSIC -->
 <audio id="music1" loop>
   <source src="calm.mp3" type="audio/mpeg">
 </audio>
-
 <audio id="music2">
   <source src="celebration.mp3" type="audio/mpeg">
 </audio>
 
+<!-- START -->
 <div class="center" id="start">
   <div class="card">
     <h1>🎉 Happy Birthday Geet 🎉</h1>
-    <p>Tap to open your surprise 🎂</p>
-    <button onclick="start()">Open</button>
+    <p>Tap to open 🎂</p>
+    <button onclick="openCake()">Open</button>
   </div>
 </div>
 
-<div class="center hidden" id="main">
+<!-- CAKE -->
+<div class="center hidden" id="cakePage">
   <div class="card">
     <h2>Blow the candle 🕯️</h2>
 
     <div class="cake">
       <div class="name">Geet 💖</div>
+
       <div class="candle">
         <div class="flame" id="flame"></div>
       </div>
@@ -190,17 +202,31 @@ button{
     </div>
 
     <p id="hint">Blow into your mic 🎤</p>
+    <button id="cutBtn" class="hidden" onclick="cutCake()">Cut the Cake 🎂</button>
+  </div>
+</div>
+
+<!-- MESSAGE PAGE -->
+<div class="center hidden" id="messagePage">
+  <div class="card">
+    <h2>💖 For You</h2>
+    <div class="message">
+      <p>
+        <!-- WRITE YOUR MESSAGE HERE -->
+        Happy Birthday Geet ❤️  
+        (Write your full message here…)
+      </p>
+    </div>
   </div>
 </div>
 
 <script>
-let blown=false;
-let audioCtx, analyser, mic;
+let blown=false, audioCtx, analyser, mic;
 
-function start(){
-  document.getElementById("start").classList.add("hidden");
-  document.getElementById("main").classList.remove("hidden");
-  document.getElementById("music1").play();
+function openCake(){
+  start.style.display="none";
+  cakePage.classList.remove("hidden");
+  music1.play();
   startMic();
 }
 
@@ -230,15 +256,19 @@ function detectBlow(){
 }
 
 function candleOut(){
-  document.getElementById("flame").style.display="none";
-  document.getElementById("music1").pause();
-  document.getElementById("music2").play();
+  flame.style.display="none";
+  music1.pause();
+  music2.play();
   confetti();
-  setTimeout(cutCake,1200);
+  cutBtn.classList.remove("hidden");
 }
 
 function cutCake(){
-  document.getElementById("knife").style.display="block";
+  knife.style.display="block";
+  setTimeout(()=>{
+    cakePage.style.display="none";
+    messagePage.classList.remove("hidden");
+  },2000);
 }
 
 function confetti(){
