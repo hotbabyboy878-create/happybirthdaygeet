@@ -2,26 +2,26 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday Geet 🎂</title>
+<title>Happy Birthday Geet Rani 🎂</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{
+body {
   margin:0;
-  height:100vh;
   font-family:Georgia, serif;
-  background: radial-gradient(circle at top, #ffe1ec, #ff6f9f);
   overflow:hidden;
+  background: radial-gradient(circle at top, #ffe1ec, #ff6f9f);
 }
 
-.screen{
+/* COMMON CARD */
+.screen {
   height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
 }
 
-.card{
+.card {
   background:rgba(255,255,255,0.45);
   backdrop-filter:blur(18px);
   padding:36px;
@@ -33,7 +33,7 @@ body{
   animation:fadeIn 1s ease;
 }
 
-button{
+button {
   width:100%;
   margin-top:24px;
   padding:16px;
@@ -45,13 +45,41 @@ button{
   cursor:pointer;
 }
 
-.hidden{display:none}
+.hidden { display:none; }
 
-/* 🎂 UPGRADED CAKE */
+/* COUNTDOWN */
+#countdown {
+  font-size:96px;
+  font-weight:bold;
+  color:#ff2f92;
+  animation:scaleUp 0.5s ease;
+}
+
+@keyframes scaleUp{
+  0%{transform:scale(0)}
+  50%{transform:scale(1.2)}
+  100%{transform:scale(1)}
+}
+
+/* HAPPY BIRTHDAY REVEAL */
+#happy {
+  font-size:38px;
+  font-weight:bold;
+  color:#ff2f92;
+  text-shadow:0 0 18px #ff6f9f;
+  animation:fadeInText 1s ease forwards;
+}
+
+@keyframes fadeInText{
+  from {opacity:0; transform:scale(0.5);}
+  to {opacity:1; transform:scale(1);}
+}
+
+/* CAKE */
 .cake{
   position:relative;
   width:280px;
-  margin:70px auto 20px;
+  margin:30px auto 20px;
 }
 
 /* TOP LAYER */
@@ -106,7 +134,7 @@ button{
   box-shadow:0 8px 16px rgba(0,0,0,0.25);
 }
 
-/* 🕯️ CANDLE */
+/* CANDLE */
 .candle{
   position:absolute;
   top:-65px;
@@ -131,7 +159,7 @@ button{
   animation:flicker .25s infinite;
 }
 
-/* 🔪 PROPER KNIFE (TOP DOWN) */
+/* KNIFE */
 .knife{
   position:absolute;
   top:-160px;
@@ -145,7 +173,7 @@ button{
   animation:cutDown 2s ease forwards;
 }
 
-/* 🎊 CONFETTI */
+/* CONFETTI */
 .confetti{
   position:fixed;
   top:-10px;
@@ -154,7 +182,7 @@ button{
   animation:fall 4s linear forwards;
 }
 
-/* 📜 MESSAGE PAGE */
+/* MESSAGE */
 .message-box{
   max-height:65vh;
   overflow-y:auto;
@@ -192,19 +220,17 @@ button{
 <audio id="music1" loop src="calm.mp3"></audio>
 <audio id="music2" src="celebration.mp3"></audio>
 
-<!-- PAGE 1 -->
+<!-- PAGE 1: Countdown -->
 <div class="screen" id="page1">
   <div class="card">
-    <h1>🎉 Happy Birthday Geet 🎉</h1>
-    <p>Tap to open 🎂</p>
-    <button onclick="openCake()">Open</button>
+    <div id="countdown">3</div>
   </div>
 </div>
 
-<!-- PAGE 2 -->
+<!-- PAGE 2: Happy Birthday Reveal + Cake -->
 <div class="screen hidden" id="page2">
   <div class="card">
-    <h2>Blow the candle 🕯️</h2>
+    <div id="happy">🎉 Happy Birthday Geet 💖 🎉</div>
 
     <div class="cake">
       <div class="candle">
@@ -229,15 +255,12 @@ button{
   </div>
 </div>
 
-<!-- PAGE 3 -->
+<!-- PAGE 3: Messages -->
 <div class="screen hidden" id="page3">
   <div class="card">
     <h2>💖 For You</h2>
     <div class="message-box">
-      <p>
-        Happy Birthday Geet ❤️  
-        Write your full long birthday message here… scrollable page for all your wishes!
-      </p>
+      <p>Happy Birthday Geet ❤️ Write your long heartfelt wishes here… scrollable for all messages!</p>
     </div>
     <button onclick="goBackToStart()">⬅ Go Back</button>
   </div>
@@ -246,10 +269,32 @@ button{
 <script>
 let blown=false, audioCtx, analyser;
 
-function openCake(){
-  page1.classList.add("hidden");
-  page2.classList.remove("hidden");
-  music1.play();
+// Countdown
+let countdown=3;
+const page1=document.getElementById("page1");
+const page2=document.getElementById("page2");
+const page3=document.getElementById("page3");
+const countdownEl=document.getElementById("countdown");
+
+function startCountdown(){
+  const interval=setInterval(()=>{
+    if(countdown>1){
+      countdown--;
+      countdownEl.innerText=countdown;
+    } else {
+      clearInterval(interval);
+      page1.classList.add("hidden");
+      page2.classList.remove("hidden");
+      music1.play();
+      startBlowDetection();
+      confetti();
+    }
+  },1000);
+}
+startCountdown();
+
+// Blow detection
+function startBlowDetection(){
   navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
     audioCtx=new AudioContext();
     analyser=audioCtx.createAnalyser();
@@ -267,25 +312,27 @@ function detectBlow(){
     let vol=data.reduce((a,b)=>a+b)/data.length;
     if(vol>60 && !blown){
       blown=true;
-      flame.style.display="none";
+      document.getElementById("flame").style.display="none";
       music1.pause();
       music2.play();
       confetti();
-      cutBtn.classList.remove("hidden");
+      document.getElementById("cutBtn").classList.remove("hidden");
     }
     requestAnimationFrame(check);
   }
   check();
 }
 
+// Cut Cake
 function cutCake(){
-  knife.style.display="block";
+  document.getElementById("knife").style.display="block";
   setTimeout(()=>{
     page2.classList.add("hidden");
     page3.classList.remove("hidden");
   },2000);
 }
 
+// Confetti
 function confetti(){
   for(let i=0;i<90;i++){
     let c=document.createElement("div");
@@ -297,16 +344,19 @@ function confetti(){
   }
 }
 
+// Go back to start
 function goBackToStart(){
   page3.classList.add("hidden");
   page1.classList.remove("hidden");
-  // reset cake/knife for replay
+  countdown=3;
+  countdownEl.innerText=countdown;
   blown=false;
-  flame.style.display="block";
-  knife.style.display="none";
-  cutBtn.classList.add("hidden");
+  document.getElementById("flame").style.display="block";
+  document.getElementById("knife").style.display="none";
+  document.getElementById("cutBtn").classList.add("hidden");
   music2.pause();
-  music1.currentTime = 0;
+  music1.currentTime=0;
+  startCountdown();
 }
 </script>
 
