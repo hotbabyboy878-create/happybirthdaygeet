@@ -2,360 +2,166 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday Geet 🎂</title>
+<title>Birthday Cake Test 🎂</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
+body{
   margin:0;
-  font-family:Georgia, serif;
-  background: radial-gradient(circle at top, #ffe1ec, #ff6f9f);
-  overflow:hidden;
-  display:flex;
-  justify-content:center;
-  align-items:center;
   height:100vh;
-}
-
-/* COMMON CARD */
-.screen {
   display:flex;
-  align-items:center;
   justify-content:center;
-  width:100%;
-  height:100%;
-  flex-direction:row; /* horizontal layout */
-  flex-wrap:wrap;
+  align-items:center;
+  background:radial-gradient(circle at top,#ffe6ef,#ff6f9f);
+  font-family:Georgia, serif;
 }
 
-.card {
-  background:rgba(255,255,255,0.45);
-  backdrop-filter:blur(18px);
-  padding:36px;
-  border-radius:36px;
-  max-width:420px;
-  width:90%;
-  text-align:center;
-  box-shadow:0 40px 80px rgba(200,70,120,0.4);
-  animation:fadeIn 1s ease;
-  margin:12px;
+/* ===== CAKE CONTAINER ===== */
+.cake-wrap{
+  position:relative;
+  width:320px;
+  height:320px;
 }
 
-button {
-  width:100%;
-  margin-top:24px;
-  padding:16px;
-  border:none;
-  border-radius:40px;
-  font-size:17px;
-  background:linear-gradient(135deg,#ff4f9a,#ff85b3);
-  color:white;
-  cursor:pointer;
+/* ===== CAKE SHADOW ===== */
+.cake-shadow{
+  position:absolute;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:260px;
+  height:40px;
+  background:rgba(0,0,0,0.25);
+  filter:blur(18px);
+  border-radius:50%;
 }
 
-.hidden { display:none; }
-
-/* COUNTDOWN */
-#countdown {
-  font-size:96px;
-  font-weight:bold;
-  color:#ff2f92;
-  animation:scaleUp 0.5s ease;
-}
-
-@keyframes scaleUp{
-  0%{transform:scale(0)}
-  50%{transform:scale(1.2)}
-  100%{transform:scale(1)}
-}
-
-/* HAPPY BIRTHDAY REVEAL */
-#happy {
-  font-size:38px;
-  font-weight:bold;
-  color:#ff2f92;
-  text-shadow:0 0 18px #ff6f9f;
-  animation:fadeInText 1s ease forwards;
-}
-
-@keyframes fadeInText{
-  from {opacity:0; transform:scale(0.5);}
-  to {opacity:1; transform:scale(1);}
-}
-
-/* REALISTIC 3D LOOKING CAKE */
+/* ===== CAKE BODY ===== */
 .cake{
-  position:relative;
-  width:280px;
-  margin:30px auto 20px;
-  perspective:800px;
+  position:absolute;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%);
+  width:260px;
+  height:160px;
+  background:linear-gradient(
+    to bottom,
+    #f5c2d1 0%,
+    #e38aa6 40%,
+    #c86b86 100%
+  );
+  border-radius:0 0 120px 120px;
+  box-shadow:
+    inset 0 -20px rgba(0,0,0,0.15),
+    inset 0 10px rgba(255,255,255,0.25);
 }
 
-/* TOP LAYER */
-.top{
-  position:relative;
+/* ===== CAKE TOP (ROUND) ===== */
+.cake-top{
+  position:absolute;
+  top:-40px;
+  left:0;
+  width:100%;
   height:80px;
-  background:linear-gradient(to bottom,#ffb3c6,#ff6f9f);
-  border-radius:35px 35px 20px 20px;
-  box-shadow:inset 0 -6px rgba(255,255,255,0.3),
-             0 10px 20px rgba(0,0,0,0.2);
-  transform:rotateX(5deg);
+  background:radial-gradient(
+    circle at 30% 30%,
+    #fff1f6,
+    #ff9bb8
+  );
+  border-radius:50%;
+  box-shadow:
+    inset 0 -8px rgba(0,0,0,0.15),
+    inset 0 6px rgba(255,255,255,0.4);
 }
 
-/* NAME ON CAKE */
+/* ===== FROSTING EDGE ===== */
+.frosting{
+  position:absolute;
+  top:30px;
+  left:0;
+  width:100%;
+  height:30px;
+  background:
+    repeating-radial-gradient(
+      circle,
+      #fff 0 8px,
+      #ffe1ec 9px 16px
+    );
+  border-radius:0 0 60px 60px;
+}
+
+/* ===== NAME ON TOP ===== */
 .name{
   position:absolute;
-  top:25px;
+  top:18px;
   width:100%;
   text-align:center;
   font-size:26px;
   color:white;
-  text-shadow:0 0 18px #ff2f92;
-  animation:glow 1.6s infinite alternate;
+  text-shadow:0 0 20px #ff2f92;
+  font-weight:bold;
 }
 
-/* DRIPS */
-.drips span{
-  position:absolute;
-  bottom:-18px;
-  width:18px;
-  background:#fff;
-  border-radius:0 0 12px 12px;
-}
-.drips span:nth-child(1){left:40px;height:22px}
-.drips span:nth-child(2){left:90px;height:30px}
-.drips span:nth-child(3){left:150px;height:24px}
-.drips span:nth-child(4){left:200px;height:28px}
-
-/* BODY LAYER */
-.body{
-  height:130px;
-  background:linear-gradient(to right,#a0522d,#6b3f2a);
-  border-radius:0 0 30px 30px;
-  box-shadow:inset 0 -10px rgba(0,0,0,0.15);
-  transform:rotateX(3deg);
-}
-
-/* STAND */
-.stand{
-  width:180px;
-  height:18px;
-  background:#ddd;
-  margin:10px auto 0;
-  border-radius:50%;
-  box-shadow:0 8px 16px rgba(0,0,0,0.25);
-}
-
-/* CANDLE */
+/* ===== CANDLE ===== */
 .candle{
   position:absolute;
-  top:-65px;
+  top:-95px;
   left:50%;
   transform:translateX(-50%);
   width:20px;
-  height:60px;
-  background:linear-gradient(#ffe066,#ffb703);
+  height:70px;
+  background:linear-gradient(
+    to bottom,
+    #fff1a8,
+    #ffb703
+  );
   border-radius:10px;
-  z-index:5;
+  box-shadow:inset 0 -5px rgba(0,0,0,0.15);
 }
 
+/* ===== FLAME ===== */
 .flame{
   position:absolute;
   top:-35px;
   left:50%;
   transform:translateX(-50%);
   width:28px;
-  height:38px;
-  background:radial-gradient(circle,#fff7cc,#ff7b00);
+  height:40px;
+  background:radial-gradient(
+    circle,
+    #fff9c4,
+    #ff7b00 70%
+  );
   border-radius:50%;
-  animation:flicker .25s infinite;
+  filter:drop-shadow(0 0 12px #ff8c00);
+  animation:flicker 0.25s infinite;
 }
 
-/* KNIFE */
-.knife{
-  position:absolute;
-  top:-180px;
-  left:50%;
-  transform:translateX(-50%);
-  width:14px;
-  height:150px;
-  background:linear-gradient(#eee,#aaa);
-  border-radius:6px;
-  display:none;
-  animation:cutDown 2s ease forwards;
-}
-
-/* CONFETTI */
-.confetti{
-  position:fixed;
-  top:-10px;
-  width:10px;
-  height:14px;
-  animation:fall 4s linear forwards;
-}
-
-/* MESSAGE */
-.message-box{
-  max-height:65vh;
-  overflow-y:auto;
-  text-align:left;
-  line-height:1.8;
-  color:#5a1a2c;
-  padding-right:8px;
-}
-
-/* ANIMATIONS */
-@keyframes fadeIn{
-  from{opacity:0;transform:scale(.95)}
-  to{opacity:1;transform:scale(1)}
-}
-@keyframes glow{
-  from{text-shadow:0 0 10px #ff2f92}
-  to{text-shadow:0 0 30px #ff2f92}
-}
+/* ===== ANIMATIONS ===== */
 @keyframes flicker{
-  0%{transform:translateX(-50%) scale(1)}
-  50%{transform:translateX(-50%) scale(.85)}
-  100%{transform:translateX(-50%) scale(1)}
-}
-@keyframes cutDown{
-  to{top:120px}
-}
-@keyframes fall{
-  to{transform:translateY(120vh) rotate(360deg)}
+  0%{transform:translateX(-50%) scale(1);}
+  50%{transform:translateX(-50%) scale(0.85);}
+  100%{transform:translateX(-50%) scale(1);}
 }
 </style>
 </head>
 
 <body>
 
-<audio id="music1" loop src="calm.mp3"></audio>
-<audio id="music2" src="celebration.mp3"></audio>
+<div class="cake-wrap">
+  <div class="cake-shadow"></div>
 
-<!-- PAGE 1: Countdown -->
-<div class="screen" id="page1">
-  <div class="card">
-    <div id="countdown">3</div>
-  </div>
-</div>
-
-<!-- PAGE 2: Happy Birthday Reveal + Cake -->
-<div class="screen hidden" id="page2">
-  <div class="card">
-    <div id="happy">🎉 Happy Birthday Geet 💖 🎉</div>
-
-    <div class="cake">
-      <div class="candle">
-        <div class="flame" id="flame"></div>
-      </div>
-
-      <div class="top">
-        <div class="name">Geet 💖</div>
-        <div class="drips">
-          <span></span><span></span><span></span><span></span>
-        </div>
-      </div>
-
-      <div class="body"></div>
-      <div class="stand"></div>
-
-      <div class="knife" id="knife"></div>
+  <div class="cake">
+    <div class="cake-top">
+      <div class="name">Geet 💖</div>
     </div>
+    <div class="frosting"></div>
+  </div>
 
-    <p>Blow into your mic 🎤</p>
-    <button id="cutBtn" class="hidden" onclick="cutCake()">Cut the Cake 🎂</button>
+  <div class="candle">
+    <div class="flame"></div>
   </div>
 </div>
-
-<!-- PAGE 3: Messages -->
-<div class="screen hidden" id="page3">
-  <div class="card">
-    <h2>💖 For You</h2>
-    <div class="message-box">
-      <p>Happy Birthday Geet ❤️ Write your full heartfelt wishes here…</p>
-    </div>
-    <button id="nextBtn">Next ➡</button>
-  </div>
-</div>
-
-<script>
-let blown=false, audioCtx, analyser;
-
-// Countdown
-let countdown=3;
-const page1=document.getElementById("page1");
-const page2=document.getElementById("page2");
-const page3=document.getElementById("page3");
-const countdownEl=document.getElementById("countdown");
-
-function startCountdown(){
-  const interval=setInterval(()=>{
-    if(countdown>1){
-      countdown--;
-      countdownEl.innerText=countdown;
-    } else {
-      clearInterval(interval);
-      page1.classList.add("hidden");
-      page2.classList.remove("hidden");
-      music1.play();
-      startBlowDetection();
-      confetti();
-    }
-  },1000);
-}
-startCountdown();
-
-// Blow detection
-function startBlowDetection(){
-  navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
-    audioCtx=new AudioContext();
-    analyser=audioCtx.createAnalyser();
-    const mic=audioCtx.createMediaStreamSource(stream);
-    mic.connect(analyser);
-    analyser.fftSize=256;
-    detectBlow();
-  });
-}
-
-function detectBlow(){
-  const data=new Uint8Array(analyser.frequencyBinCount);
-  function check(){
-    analyser.getByteFrequencyData(data);
-    let vol=data.reduce((a,b)=>a+b)/data.length;
-    if(vol>60 && !blown){
-      blown=true;
-      document.getElementById("flame").style.display="none";
-      music1.pause();
-      music2.play();
-      confetti();
-      document.getElementById("cutBtn").classList.remove("hidden");
-    }
-    requestAnimationFrame(check);
-  }
-  check();
-}
-
-// Cut Cake
-function cutCake(){
-  document.getElementById("knife").style.display="block";
-  setTimeout(()=>{
-    page2.classList.add("hidden");
-    page3.classList.remove("hidden");
-  },2000);
-}
-
-// Confetti
-function confetti(){
-  for(let i=0;i<90;i++){
-    let c=document.createElement("div");
-    c.className="confetti";
-    c.style.left=Math.random()*100+"vw";
-    c.style.background=`hsl(${Math.random()*360},100%,60%)`;
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),4000);
-  }
-}
-</script>
 
 </body>
 </html>
