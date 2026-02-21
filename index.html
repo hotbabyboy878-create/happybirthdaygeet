@@ -48,71 +48,22 @@ body {
   opacity:0.8;
 }
 
-/* Happy Birthday Reveal */
-#happy {
-  font-size:38px;
-  font-weight:bold;
-  color:#ff2f92;
-  text-shadow:0 0 18px #ff6f9f;
-  opacity:0;
-  animation:fadeInText 1s ease forwards;
-}
-
-@keyframes fadeInText{
-  from {opacity:0; transform:scale(0.5);}
-  to {opacity:1; transform:scale(1);}
-}
-
-/* Confetti animation */
-.confetti {
-  position:fixed;
-  top:-10px;
-  width:10px;
-  height:14px;
-  animation:fall 4s linear forwards;
-}
-
-@keyframes fall {
-  to {transform:translateY(120vh) rotate(360deg);}
-}
-
-button {
-  margin-top:30px;
-  padding:12px 25px;
-  background:#ff4f9a;
-  color:white;
-  font-size:18px;
-  border-radius:25px;
-  border:none;
-  cursor:pointer;
-  transition: all 0.3s ease;
-}
-
-button:hover {
-  background:#ff85b3;
-  transform:scale(1.1);
+/* Animations */
+@keyframes fadeInText {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
 }
 </style>
 </head>
 <body>
 
 <div class="screen" id="start">
-  <div id="countdown">3</div>
-  <div id="countdownText">Seconds remaining</div>
-</div>
-
-<div class="screen hidden" id="message">
-  <div id="happy">🎉 Happy Birthday Geet 💖 🎉</div>
-  <button onclick="nextPage()">Next ➡</button>
+  <div id="countdown">5</div>
 </div>
 
 <script>
-let countdown = 3;
+let countdown = 5;
 const countdownEl = document.getElementById('countdown');
-const countdownText = document.getElementById('countdownText');
-const happyMessage = document.getElementById('happy');
-const startScreen = document.getElementById('start');
-const messageScreen = document.getElementById('message');
 
 function startCountdown() {
   const interval = setInterval(() => {
@@ -121,32 +72,9 @@ function startCountdown() {
       countdownEl.innerText = countdown;
     } else {
       clearInterval(interval);
-      countdownText.innerText = "Happy Birthday Geet!";
-      showHappyMessage();
-      showConfetti();
+      // After countdown, do something else (add next step later)
     }
   }, 1000);
-}
-
-function showHappyMessage() {
-  startScreen.classList.add("hidden");
-  messageScreen.classList.remove("hidden");
-  happyMessage.style.animation = "fadeInText 1s ease forwards";
-}
-
-function showConfetti() {
-  for (let i = 0; i < 80; i++) {
-    let c = document.createElement("div");
-    c.className = "confetti";
-    c.style.left = Math.random() * 100 + "vw";
-    c.style.background = `hsl(${Math.random() * 360}, 100%, 60%)`;
-    document.body.appendChild(c);
-    setTimeout(() => c.remove(), 4000);
-  }
-}
-
-function nextPage() {
-  alert('This will be your message page. We will add it later!');
 }
 
 startCountdown();
