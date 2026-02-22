@@ -1,130 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Birthday Surprise Geet!</title>
-  <link href="https://fonts.googleapis.com/css2?family=Sacramento&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    html, body { height:100%; width:100%; font-family: 'Poppins', sans-serif; overflow:hidden; background:#111; color:#fff; display:flex; justify-content:center; align-items:center; flex-direction:column; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Geet!</title>
+<link href="https://fonts.googleapis.com/css2?family=Sacramento&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { width:100%; height:100%; overflow:hidden; background:#111; font-family:'Poppins', sans-serif; display:flex; justify-content:center; align-items:center; flex-direction:column; color:#fff; }
 
-    /* Countdown */
-    #countdown { font-size:5rem; color:#ff69b4; text-shadow: 2px 2px 15px #ff69b4; }
+  #timer3to1 { font-size:6rem; text-shadow:2px 2px 20px #ff69b4; }
+  #birthday-text { font-family:'Sacramento', cursive; font-size:4rem; color:#ff69b4; text-shadow:2px 2px 15px #ff69b4; display:none; margin-bottom:20px; text-align:center; }
+  #second-timer { font-size:2.5rem; text-shadow:1px 1px 10px #ff69b4; display:none; margin-bottom:30px; }
+  #start-btn { display:none; padding:15px 30px; font-size:1.5rem; border:none; border-radius:50px; cursor:pointer; font-weight:bold; background:linear-gradient(45deg,#ff69b4,#ff4500); box-shadow:0 0 20px #ff69b4; transition:0.3s; }
+  #start-btn:hover { transform:scale(1.1); box-shadow:0 0 40px #ff4500; }
 
-    /* Start button */
-    #start-btn { padding:15px 30px; background:linear-gradient(45deg, #ff69b4, #ff4500); color:#fff; font-weight:bold; border:none; border-radius:50px; cursor:pointer; font-size:1.5rem; box-shadow: 0 0 20px #ff69b4; transition:0.3s; display:none; margin-top:30px; }
-    #start-btn:hover { transform: scale(1.1); box-shadow: 0 0 40px #ff4500; }
+  #confetti-canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:999; }
 
-    /* Birthday Message Section */
-    #message-section { display:none; flex-direction:column; justify-content:center; align-items:center; height:100%; text-align:center; padding:20px; color:#fff; }
-    #birthday-msg { font-size:2rem; max-width:600px; text-shadow:1px 1px 5px #ff69b4; }
-
-    /* Confetti canvas */
-    #confetti-canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:999; }
-
-    /* Footer */
-    #footer { text-align:center; padding:20px; color:#fff; font-size:1.2rem; }
-
-    /* Floating hearts / balloons */
-    .heart { position:absolute; font-size:1.5rem; animation:float 6s linear infinite; }
-    @keyframes float {
-      0% { transform: translateY(0) rotate(0deg); opacity:1; }
-      100% { transform: translateY(-100vh) rotate(360deg); opacity:0; }
-    }
-
-    @media(max-width:768px) {
-      #countdown { font-size:4rem; }
-      #start-btn { font-size:1.2rem; padding:12px 25px; }
-      #birthday-msg { font-size:1.5rem; }
-    }
-  </style>
+  .balloon { position:absolute; font-size:2rem; animation:float 6s linear infinite; }
+  @keyframes float { 0% { transform:translateY(0) rotate(0deg); opacity:1 } 100% { transform:translateY(-100vh) rotate(360deg); opacity:0 } }
+</style>
 </head>
 <body>
 
-  <!-- Confetti Canvas -->
-  <canvas id="confetti-canvas"></canvas>
+<canvas id="confetti-canvas"></canvas>
 
-  <!-- Countdown Section -->
-  <div id="countdown">15</div>
-  <button id="start-btn">✨ Open Your Surprise ✨</button>
+<div id="timer3to1">3</div>
+<div id="birthday-text">Happy Birthday Geet! 🎉</div>
+<div id="second-timer">15</div>
+<button id="start-btn">✨ Open Your Surprise ✨</button>
+<audio id="bg-music" src="birthday-song.mp3" loop></audio>
 
-  <!-- Birthday Message Section -->
-  <div id="message-section">
-    <div id="birthday-msg"></div>
-    <div id="footer">🎈 Made with love just for you! 🎈</div>
-  </div>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+  const timer3to1 = document.getElementById('timer3to1');
+  const birthdayText = document.getElementById('birthday-text');
+  const secondTimer = document.getElementById('second-timer');
+  const startBtn = document.getElementById('start-btn');
+  const bgMusic = document.getElementById('bg-music');
+  const confettiCanvas = document.getElementById('confetti-canvas');
 
-  <audio id="bg-music" src="birthday-song.mp3" loop></audio>
+  // 3-2-1 Countdown
+  let count = 3;
+  const countdownInterval = setInterval(() => {
+    count--;
+    if(count > 0) timer3to1.innerText = count;
+    else {
+      clearInterval(countdownInterval);
+      timer3to1.style.display = 'none';
+      showBirthday();
+    }
+  },1000);
 
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script>
-    const countdownEl = document.getElementById('countdown');
-    const startBtn = document.getElementById('start-btn');
-    const messageSection = document.getElementById('message-section');
-    const bgMusic = document.getElementById('bg-music');
-
-    // 15-second countdown
-    let countdown = 15;
-    const countdownInterval = setInterval(() => {
-      countdown--;
-      if(countdown >= 0){
-        countdownEl.innerText = countdown;
-      } else {
-        clearInterval(countdownInterval);
-        countdownEl.style.display = 'none';
+  function showBirthday() {
+    birthdayText.style.display = 'block';
+    secondTimer.style.display = 'block';
+    launchConfetti();
+    spawnBalloons();
+    let secCount = 15;
+    secondTimer.innerText = secCount;
+    const secInterval = setInterval(() => {
+      secCount--;
+      if(secCount >= 0) secondTimer.innerText = secCount;
+      else {
+        clearInterval(secInterval);
         startBtn.style.display = 'inline-block';
       }
-    }, 1000);
+    },1000);
+  }
 
-    // Start button click
-    startBtn.onclick = () => {
-      startBtn.style.display = 'none';
-      messageSection.style.display = 'flex';
-      bgMusic.play();
-      typeWriter();
-      launchConfetti();
-      spawnHearts();
-    };
+  // Start button click
+  startBtn.onclick = () => {
+    birthdayText.style.display = 'none';
+    secondTimer.style.display = 'none';
+    startBtn.style.display = 'none';
+    bgMusic.play();
+    // You can continue with typewriter message or next page here
+  };
 
-    // Typewriter effect
-    const birthdayMsg = document.getElementById('birthday-msg');
-    const message = "Geet, wishing you a day filled with love, laughter, and all the happiness in the world! Happy Birthday! 🎂🎉❤️";
-    let i = 0;
-    function typeWriter(){
-      if(i < message.length){
-        birthdayMsg.innerHTML += message.charAt(i);
-        i++;
-        setTimeout(typeWriter, 80);
-      }
-    }
+  // Confetti
+  function launchConfetti(){
+    const duration = 5*1000;
+    const animationEnd = Date.now() + duration;
+    const defaults = { startVelocity:30, spread:360, ticks:60, zIndex:999 };
+    const interval = setInterval(()=>{
+      const timeLeft = animationEnd - Date.now();
+      if(timeLeft <= 0) return clearInterval(interval);
+      const particleCount = 50 * (timeLeft/duration);
+      confetti({...defaults, particleCount, origin:{x:Math.random(),y:Math.random()-0.2}});
+    },250);
+  }
 
-    // Confetti
-    function launchConfetti(){
-      const duration = 5 * 1000;
-      const animationEnd = Date.now() + duration;
-      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 999 };
-      const interval = setInterval(function() {
-        const timeLeft = animationEnd - Date.now();
-        if(timeLeft <= 0) return clearInterval(interval);
-        const particleCount = 50 * (timeLeft / duration);
-        confetti({...defaults, particleCount, origin:{x:Math.random(), y:Math.random()-0.2}});
-      }, 250);
-    }
-
-    // Floating balloons
-    function spawnHearts(){
-      setInterval(() => {
-        const heart = document.createElement('div');
-        heart.className = 'heart';
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.fontSize = Math.random()*20+15 + 'px';
-        heart.style.color = '#ff69b4';
-        heart.innerHTML = '🎈';
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 6000);
-      }, 500);
-    }
-  </script>
+  // Balloons
+  function spawnBalloons(){
+    setInterval(()=>{
+      const balloon = document.createElement('div');
+      balloon.className='balloon';
+      balloon.style.left=Math.random()*100+'vw';
+      balloon.style.fontSize=Math.random()*20+20+'px';
+      balloon.innerHTML='🎈';
+      document.body.appendChild(balloon);
+      setTimeout(()=>balloon.remove(),6000);
+    },500);
+  }
+</script>
 </body>
 </html>
