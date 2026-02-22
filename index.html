@@ -23,22 +23,25 @@
   .balloon { position:absolute; bottom:0; animation:floatUp 6s linear forwards; font-size:2rem; }
   @keyframes floatUp { 0% { transform:translateY(0) rotate(0deg); opacity:1; } 100% { transform:translateY(-100vh) rotate(360deg); opacity:0; } }
 
-  /* Cake Container */
-  #cake-container { display:none; flex-direction:column; align-items:center; margin-top:20px; }
-
-  /* Cake Layers */
-  .cake-layer { position:relative; border-radius:20px; margin-top:-10px; box-shadow:0 0 20px rgba(255,255,255,0.2); }
-  .layer1 { width:250px; height:60px; background:linear-gradient(to bottom,#ff6fbf,#ff4081); }
-  .layer2 { width:200px; height:50px; background:linear-gradient(to bottom,#ff99cc,#ff66aa); }
-  .layer3 { width:150px; height:40px; background:linear-gradient(to bottom,#ffc0cb,#ff80aa); border-radius:15px; }
-
-  /* Candles */
-  .candle { width:10px; height:30px; background:#fff; position:absolute; top:-30px; left:50%; transform:translateX(-50%); border-radius:3px; }
-  .flame { width:10px; height:15px; background:orange; border-radius:50%; position:absolute; top:-15px; left:0; animation:flameFlicker 0.5s infinite alternate; box-shadow:0 0 10px yellow; }
-  @keyframes flameFlicker { 0%{ transform:scale(1) } 100%{ transform:scale(1.5) } }
-
-  /* Sprinkles */
-  .sprinkle { width:6px; height:6px; border-radius:50%; position:absolute; }
+  /* Book */
+  #book-container {
+    display:none;
+    width:70vw;
+    height:60vh;
+    background:#222;
+    border-radius:10px;
+    box-shadow:0 0 40px rgba(255,255,255,0.2);
+    padding:30px;
+    overflow:hidden;
+    text-align:center;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+  }
+  #book-container h1 { font-family:'Sacramento', cursive; color:#ff69b4; font-size:3rem; margin-bottom:20px; }
+  #book-container p { font-size:1.5rem; line-height:2rem; max-width:80%; color:#fff; text-shadow:1px 1px 5px #ff69b4; }
 </style>
 </head>
 <body>
@@ -51,11 +54,15 @@
 <div id="second-timer">15</div>
 <button id="start-btn">✨ Open Your Surprise ✨</button>
 
-<!-- Cake -->
-<div id="cake-container">
-  <div class="cake-layer layer1"><div class="candle"><div class="flame"></div></div></div>
-  <div class="cake-layer layer2"><div class="candle"><div class="flame"></div></div></div>
-  <div class="cake-layer layer3"><div class="candle"><div class="flame"></div></div></div>
+<!-- Book -->
+<div id="book-container">
+  <h1>Your Birthday Story</h1>
+  <p>
+    Once upon a time, a beautiful lady named Geet came into the world,  
+    spreading joy and magic wherever she went.  
+    Even she doesn’t realize it yet, but today is the day everyone celebrates her amazing spirit.  
+    May this year bring endless happiness, laughter, and surprises just for you!
+  </p>
 </div>
 
 <audio id="bg-music" src="birthday-song.mp3" loop></audio>
@@ -68,7 +75,7 @@
   const secondTimer = document.getElementById('second-timer');
   const startBtn = document.getElementById('start-btn');
   const bgMusic = document.getElementById('bg-music');
-  const cakeContainer = document.getElementById('cake-container');
+  const bookContainer = document.getElementById('book-container');
 
   // 3-2-1 Countdown
   let count = 3;
@@ -106,10 +113,9 @@
     secondTimer.style.display = 'none';
     startBtn.style.display = 'none';
     bgMusic.play();
-    cakeContainer.style.display = 'flex';
+    bookContainer.style.display = 'flex';
     launchConfetti();
     spawnBalloons();
-    addSprinkles();
   };
 
   // Confetti
@@ -136,22 +142,6 @@
       document.body.appendChild(balloon);
       setTimeout(()=>balloon.remove(),6000);
     },500);
-  }
-
-  // Sprinkles
-  function addSprinkles(){
-    const colors = ['#ff0','#f0f','#0ff','#0f0','#fff'];
-    const layers = document.querySelectorAll('.cake-layer');
-    layers.forEach(layer=>{
-      for(let i=0;i<20;i++){
-        const s = document.createElement('div');
-        s.className='sprinkle';
-        s.style.background = colors[Math.floor(Math.random()*colors.length)];
-        s.style.top = Math.random()*layer.offsetHeight+'px';
-        s.style.left = Math.random()*layer.offsetWidth+'px';
-        layer.appendChild(s);
-      }
-    });
   }
 
 </script>
