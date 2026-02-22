@@ -9,39 +9,21 @@
   * { margin:0; padding:0; box-sizing:border-box; }
   html, body { width:100%; height:100%; overflow:hidden; background:#111; font-family:'Poppins', sans-serif; display:flex; justify-content:center; align-items:center; flex-direction:column; color:#fff; }
 
-  /* Countdown and text */
-  #timer3to1 { font-size:6rem; text-shadow:2px 2px 20px #ff69b4; display:block; }
-  #birthday-text { font-family:'Sacramento', cursive; font-size:4rem; color:#ff69b4; text-shadow:2px 2px 15px #ff69b4; display:none; text-align:center; margin-bottom:10px; }
-  #sub-text { font-size:1.8rem; text-align:center; color:#fff; text-shadow:1px 1px 5px #ff69b4; display:none; margin-bottom:20px; max-width:90vw; }
+  #timer3to1 { font-size:6rem; text-shadow:2px 2px 20px #ff69b4; }
+  #birthday-text { font-family:'Sacramento', cursive; font-size:4rem; color:#ff69b4; text-shadow:2px 2px 15px #ff69b4; text-align:center; display:none; margin-bottom:10px; }
+  #sub-text { font-size:1.8rem; color:#fff; text-shadow:1px 1px 5px #ff69b4; text-align:center; display:none; margin-bottom:20px; max-width:90vw; }
   #second-timer { font-size:2.5rem; text-shadow:1px 1px 10px #ff69b4; display:none; margin-bottom:30px; }
   #start-btn { display:none; padding:15px 30px; font-size:1.5rem; border:none; border-radius:50px; cursor:pointer; font-weight:bold; background:linear-gradient(45deg,#ff69b4,#ff4500); box-shadow:0 0 20px #ff69b4; transition:0.3s; }
   #start-btn:hover { transform:scale(1.1); box-shadow:0 0 40px #ff4500; }
 
   #confetti-canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:999; }
 
-  /* Balloons */
   .balloon { position:absolute; bottom:0; animation:floatUp 6s linear forwards; font-size:2rem; }
   @keyframes floatUp { 0% { transform:translateY(0) rotate(0deg); opacity:1; } 100% { transform:translateY(-100vh) rotate(360deg); opacity:0; } }
 
-  /* Book */
-  #book-container {
-    display:none;
-    width:70vw;
-    height:60vh;
-    background:#222;
-    border-radius:10px;
-    box-shadow:0 0 40px rgba(255,255,255,0.2);
-    padding:30px;
-    overflow:hidden;
-    text-align:center;
-    position:relative;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-  }
-  #book-container h1 { font-family:'Sacramento', cursive; color:#ff69b4; font-size:3rem; margin-bottom:20px; }
-  #book-container p { font-size:1.5rem; line-height:2rem; max-width:80%; color:#fff; text-shadow:1px 1px 5px #ff69b4; }
+  #book-container { display:none; background:#222; padding:30px; border-radius:10px; max-width:80vw; text-align:center; box-shadow:0 0 40px rgba(255,255,255,0.2); }
+  #book-container h1 { font-family:'Sacramento', cursive; font-size:3rem; color:#ff69b4; margin-bottom:20px; }
+  #book-container p { font-size:1.5rem; line-height:2rem; color:#fff; text-shadow:1px 1px 5px #ff69b4; }
 </style>
 </head>
 <body>
@@ -54,7 +36,6 @@
 <div id="second-timer">15</div>
 <button id="start-btn">✨ Open Your Surprise ✨</button>
 
-<!-- Book -->
 <div id="book-container">
   <h1>Your Birthday Story</h1>
   <p>
@@ -65,8 +46,6 @@
   </p>
 </div>
 
-<audio id="bg-music" src="birthday-song.mp3" loop></audio>
-
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script>
   const timer3to1 = document.getElementById('timer3to1');
@@ -74,67 +53,63 @@
   const subText = document.getElementById('sub-text');
   const secondTimer = document.getElementById('second-timer');
   const startBtn = document.getElementById('start-btn');
-  const bgMusic = document.getElementById('bg-music');
   const bookContainer = document.getElementById('book-container');
 
   // 3-2-1 Countdown
   let count = 3;
-  const countdownInterval = setInterval(() => {
+  const countdownInterval = setInterval(()=>{
     count--;
     if(count > 0) timer3to1.innerText = count;
     else {
       clearInterval(countdownInterval);
-      timer3to1.style.display = 'none';
-      showBirthday();
+      timer3to1.style.display='none';
+      birthdayText.style.display='block';
+      subText.style.display='block';
+      secondTimer.style.display='block';
+      startConfetti();
+      spawnBalloons();
+      startSecondTimer();
     }
   },1000);
 
-  function showBirthday() {
-    birthdayText.style.display = 'block';
-    subText.style.display = 'block';
-    secondTimer.style.display = 'block';
-    launchConfetti();
-    spawnBalloons();
-    let secCount = 15;
-    secondTimer.innerText = secCount;
-    const secInterval = setInterval(() => {
-      secCount--;
-      if(secCount >= 0) secondTimer.innerText = secCount;
-      else {
-        clearInterval(secInterval);
-        startBtn.style.display = 'inline-block';
+  function startSecondTimer(){
+    let sec = 15;
+    secondTimer.innerText=sec;
+    const interval = setInterval(()=>{
+      sec--;
+      if(sec>=0) secondTimer.innerText=sec;
+      else { 
+        clearInterval(interval);
+        startBtn.style.display='inline-block';
       }
     },1000);
   }
 
-  startBtn.onclick = () => {
-    birthdayText.style.display = 'none';
-    subText.style.display = 'none';
-    secondTimer.style.display = 'none';
-    startBtn.style.display = 'none';
-    bgMusic.play();
-    bookContainer.style.display = 'flex';
-    launchConfetti();
+  startBtn.onclick = ()=>{
+    birthdayText.style.display='none';
+    subText.style.display='none';
+    secondTimer.style.display='none';
+    startBtn.style.display='none';
+    bookContainer.style.display='block';
+    startConfetti();
     spawnBalloons();
-  };
+  }
 
-  // Confetti
-  function launchConfetti(){
-    const duration = 5*1000;
-    const animationEnd = Date.now() + duration;
-    const defaults = { startVelocity:30, spread:360, ticks:60, zIndex:999 };
-    const interval = setInterval(()=>{
-      const timeLeft = animationEnd - Date.now();
-      if(timeLeft <= 0) return clearInterval(interval);
-      const particleCount = 50 * (timeLeft/duration);
-      confetti({...defaults, particleCount, origin:{x:Math.random(),y:Math.random()-0.2}});
+  function startConfetti(){
+    const duration=5*1000;
+    const animationEnd=Date.now()+duration;
+    const defaults={startVelocity:30,spread:360,ticks:60,zIndex:999};
+    const interval=setInterval(()=>{
+      const timeLeft=animationEnd-Date.now();
+      if(timeLeft<=0)return clearInterval(interval);
+      const particleCount=50*(timeLeft/duration);
+      confetti({...defaults,particleCount,origin:{x:Math.random(),y:Math.random()-0.2}});
     },250);
   }
 
-  // Balloons from bottom
   function spawnBalloons(){
     setInterval(()=>{
-      const balloon = document.createElement('div');
+      const balloon=document.createElement('div');
       balloon.className='balloon';
       balloon.style.left=Math.random()*90+'vw';
       balloon.style.fontSize=Math.random()*20+20+'px';
