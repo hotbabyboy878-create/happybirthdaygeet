@@ -7,17 +7,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Sacramento&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
-    body, html { height:100%; font-family: 'Poppins', sans-serif; overflow-x:hidden; background:#111; color:#fff; max-width:100vw; }
+    html, body { height:100%; width:100%; font-family: 'Poppins', sans-serif; overflow:hidden; background:#111; color:#fff; display:flex; justify-content:center; align-items:center; flex-direction:column; }
 
-    /* Landing Section */
-    #landing { display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; text-align:center; position:relative; }
-    #countdown { font-size:5rem; color:#fff; text-shadow: 2px 2px 15px #ff69b4; }
-    #birthday-text { display:none; font-family: 'Sacramento', cursive; font-size:4rem; margin-top:20px; text-shadow: 2px 2px 15px #ff69b4; color:#ff69b4; }
-    #start-btn { padding:15px 30px; background:linear-gradient(45deg, #ff69b4, #ff4500); color:#fff; font-weight:bold; border:none; border-radius:50px; cursor:pointer; font-size:1.2rem; box-shadow: 0 0 20px #ff69b4; transition:0.3s; display:none; margin-top:30px; }
+    /* Countdown */
+    #countdown { font-size:5rem; color:#ff69b4; text-shadow: 2px 2px 15px #ff69b4; }
+
+    /* Start button */
+    #start-btn { padding:15px 30px; background:linear-gradient(45deg, #ff69b4, #ff4500); color:#fff; font-weight:bold; border:none; border-radius:50px; cursor:pointer; font-size:1.5rem; box-shadow: 0 0 20px #ff69b4; transition:0.3s; display:none; margin-top:30px; }
     #start-btn:hover { transform: scale(1.1); box-shadow: 0 0 40px #ff4500; }
 
     /* Birthday Message Section */
-    #message-section { display:none; flex-direction:column; justify-content:center; align-items:center; height:100vh; text-align:center; padding:20px; color:#fff; overflow-x:hidden; }
+    #message-section { display:none; flex-direction:column; justify-content:center; align-items:center; height:100%; text-align:center; padding:20px; color:#fff; }
     #birthday-msg { font-size:2rem; max-width:600px; text-shadow:1px 1px 5px #ff69b4; }
 
     /* Confetti canvas */
@@ -35,9 +35,8 @@
 
     @media(max-width:768px) {
       #countdown { font-size:4rem; }
-      #birthday-text { font-size:3rem; }
+      #start-btn { font-size:1.2rem; padding:12px 25px; }
       #birthday-msg { font-size:1.5rem; }
-      #start-btn { font-size:1rem; padding:12px 25px; }
     }
   </style>
 </head>
@@ -46,13 +45,9 @@
   <!-- Confetti Canvas -->
   <canvas id="confetti-canvas"></canvas>
 
-  <!-- Landing Section -->
-  <div id="landing">
-    <div id="countdown">3</div>
-    <div id="birthday-text">Happy Birthday Geet! 🎉</div>
-    <button id="start-btn">✨ Open Your Surprise ✨</button>
-    <audio id="bg-music" src="birthday-song.mp3" loop></audio>
-  </div>
+  <!-- Countdown Section -->
+  <div id="countdown">15</div>
+  <button id="start-btn">✨ Open Your Surprise ✨</button>
 
   <!-- Birthday Message Section -->
   <div id="message-section">
@@ -60,38 +55,31 @@
     <div id="footer">🎈 Made with love just for you! 🎈</div>
   </div>
 
-  <!-- Scripts -->
+  <audio id="bg-music" src="birthday-song.mp3" loop></audio>
+
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script>
     const countdownEl = document.getElementById('countdown');
-    const birthdayText = document.getElementById('birthday-text');
     const startBtn = document.getElementById('start-btn');
-    const landing = document.getElementById('landing');
     const messageSection = document.getElementById('message-section');
     const bgMusic = document.getElementById('bg-music');
 
-    // 3 2 1 Countdown
-    let countdown = 3;
+    // 15-second countdown
+    let countdown = 15;
     const countdownInterval = setInterval(() => {
       countdown--;
-      if(countdown > 0){
+      if(countdown >= 0){
         countdownEl.innerText = countdown;
       } else {
         clearInterval(countdownInterval);
         countdownEl.style.display = 'none';
-        birthdayText.style.display = 'block';
-        launchConfetti();
-        spawnHearts();
-        // Show button after 15 seconds
-        setTimeout(() => {
-          startBtn.style.display = 'inline-block';
-        }, 15000);
+        startBtn.style.display = 'inline-block';
       }
     }, 1000);
 
-    // Start Button click
+    // Start button click
     startBtn.onclick = () => {
-      landing.style.display = 'none';
+      startBtn.style.display = 'none';
       messageSection.style.display = 'flex';
       bgMusic.play();
       typeWriter();
@@ -99,7 +87,7 @@
       spawnHearts();
     };
 
-    // Typewriter Effect
+    // Typewriter effect
     const birthdayMsg = document.getElementById('birthday-msg');
     const message = "Geet, wishing you a day filled with love, laughter, and all the happiness in the world! Happy Birthday! 🎂🎉❤️";
     let i = 0;
@@ -124,7 +112,7 @@
       }, 250);
     }
 
-    // Floating Hearts / Balloons
+    // Floating balloons
     function spawnHearts(){
       setInterval(() => {
         const heart = document.createElement('div');
