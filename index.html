@@ -16,14 +16,59 @@
   #start-btn { display:none; padding:15px 30px; font-size:1.5rem; border:none; border-radius:50px; cursor:pointer; font-weight:bold; background:linear-gradient(45deg,#ff69b4,#ff4500); box-shadow:0 0 20px #ff69b4; transition:0.3s; }
   #start-btn:hover { transform:scale(1.1); box-shadow:0 0 40px #ff4500; }
 
-  #confetti-canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:999; }
+  #confetti-canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
 
-  .balloon { position:absolute; bottom:0; animation:floatUp 6s linear forwards; font-size:2rem; }
+  .balloon { position:absolute; bottom:0; animation:floatUp 6s linear forwards; font-size:2rem; z-index:0; }
   @keyframes floatUp { 0% { transform:translateY(0) rotate(0deg); opacity:1; } 100% { transform:translateY(-100vh) rotate(360deg); opacity:0; } }
 
-  #book-container { display:none; background:#222; padding:30px; border-radius:10px; max-width:80vw; text-align:center; box-shadow:0 0 40px rgba(255,255,255,0.2); }
-  #book-container h1 { font-family:'Sacramento', cursive; font-size:3rem; color:#ff69b4; margin-bottom:20px; }
-  #book-container p { font-size:1.5rem; line-height:2rem; color:#fff; text-shadow:1px 1px 5px #ff69b4; }
+  /* Book container */
+  #book-container { 
+    display:none; 
+    perspective:1500px; 
+    width:60vw; 
+    height:60vh; 
+    position:relative; 
+    z-index:1; 
+  }
+
+  /* Book spine and pages */
+  .book {
+    width:100%;
+    height:100%;
+    position:relative;
+    transform-style: preserve-3d;
+    transition: transform 1s;
+    cursor:pointer;
+  }
+  .book.open { transform: rotateY(-180deg); }
+
+  .page {
+    width:50%;
+    height:100%;
+    background:#222;
+    position:absolute;
+    top:0;
+    left:0;
+    border:1px solid #555;
+    box-shadow:0 0 30px rgba(0,0,0,0.3);
+    transform-origin:left;
+    backface-visibility:hidden;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    color:#fff;
+    text-align:center;
+  }
+  .page.right {
+    left:50%;
+    transform-origin:right;
+    background:#333;
+    color:#ff69b4;
+  }
+  .page-content { font-size:1.5rem; line-height:2rem; }
+  .page h1 { font-family:'Sacramento', cursive; font-size:2.5rem; margin-bottom:15px; }
 </style>
 </head>
 <body>
@@ -36,14 +81,24 @@
 <div id="second-timer">15</div>
 <button id="start-btn">✨ Open Your Surprise ✨</button>
 
+<!-- Book -->
 <div id="book-container">
-  <h1>Your Birthday Story</h1>
-  <p>
-    Once upon a time, a beautiful lady named Geet came into the world,  
-    spreading joy and magic wherever she went.  
-    Even she doesn’t realize it yet, but today is the day everyone celebrates her amazing spirit.  
-    May this year bring endless happiness, laughter, and surprises just for you!
-  </p>
+  <div class="book" id="book">
+    <div class="page left">
+      <h1>Happy Birthday Geet!</h1>
+      <div class="page-content">
+        Once upon a time, a beautiful lady named Geet came into the world,<br>
+        spreading joy and magic wherever she went.
+      </div>
+    </div>
+    <div class="page right">
+      <h1>Your Story</h1>
+      <div class="page-content">
+        Even she doesn’t realize it yet, but today is the day everyone celebrates her amazing spirit.<br>
+        May this year bring endless happiness, laughter, and surprises just for you!
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -54,31 +109,31 @@
   const secondTimer = document.getElementById('second-timer');
   const startBtn = document.getElementById('start-btn');
   const bookContainer = document.getElementById('book-container');
+  const book = document.getElementById('book');
 
-  // 3-2-1 Countdown
   let count = 3;
   const countdownInterval = setInterval(()=>{
     count--;
-    if(count > 0) timer3to1.innerText = count;
+    if(count>0) timer3to1.innerText=count;
     else {
       clearInterval(countdownInterval);
       timer3to1.style.display='none';
       birthdayText.style.display='block';
       subText.style.display='block';
       secondTimer.style.display='block';
-      startConfetti();
+      launchConfetti();
       spawnBalloons();
       startSecondTimer();
     }
   },1000);
 
   function startSecondTimer(){
-    let sec = 15;
+    let sec=15;
     secondTimer.innerText=sec;
-    const interval = setInterval(()=>{
+    const interval=setInterval(()=>{
       sec--;
       if(sec>=0) secondTimer.innerText=sec;
-      else { 
+      else {
         clearInterval(interval);
         startBtn.style.display='inline-block';
       }
@@ -91,17 +146,22 @@
     secondTimer.style.display='none';
     startBtn.style.display='none';
     bookContainer.style.display='block';
-    startConfetti();
+    launchConfetti();
     spawnBalloons();
   }
 
-  function startConfetti(){
+  // Click book to open
+  book.onclick = ()=>{
+    book.classList.toggle('open');
+  }
+
+  function launchConfetti(){
     const duration=5*1000;
     const animationEnd=Date.now()+duration;
     const defaults={startVelocity:30,spread:360,ticks:60,zIndex:999};
     const interval=setInterval(()=>{
       const timeLeft=animationEnd-Date.now();
-      if(timeLeft<=0)return clearInterval(interval);
+      if(timeLeft<=0) return clearInterval(interval);
       const particleCount=50*(timeLeft/duration);
       confetti({...defaults,particleCount,origin:{x:Math.random(),y:Math.random()-0.2}});
     },250);
@@ -118,7 +178,6 @@
       setTimeout(()=>balloon.remove(),6000);
     },500);
   }
-
 </script>
 </body>
 </html>
