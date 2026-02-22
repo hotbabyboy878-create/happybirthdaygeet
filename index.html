@@ -72,9 +72,20 @@
 }
 
 .subtitle {
-  font-size: 1.05rem;
-  color: #666;
+  font-size: 1.1rem;
+  color: #ff6f91;
   margin-bottom: 22px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.subtitle::before,
+.subtitle::after {
+  content: "✦";
+  color: #ffb3c6;
+  margin: 0 8px;
+  font-size: 1rem;
 }
 
 .surprise-btn {
