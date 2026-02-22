@@ -12,8 +12,8 @@
     /* Landing Section */
     #landing { display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; text-align:center; position:relative; }
     #landing h1 { font-family: 'Sacramento', cursive; font-size:4rem; margin-bottom:20px; text-shadow: 2px 2px 15px #ff69b4; color:#ff69b4; }
-    #countdown { font-size:2rem; margin-bottom:20px; color:#fff; text-shadow: 1px 1px 5px #ff69b4; }
-    #start-btn { padding:15px 30px; background:linear-gradient(45deg, #ff69b4, #ff4500); color:#fff; font-weight:bold; border:none; border-radius:50px; cursor:pointer; font-size:1.2rem; box-shadow: 0 0 20px #ff69b4; transition:0.3s; }
+    #countdown { font-size:5rem; margin-bottom:20px; color:#fff; text-shadow: 2px 2px 15px #ff69b4; }
+    #start-btn { padding:15px 30px; background:linear-gradient(45deg, #ff69b4, #ff4500); color:#fff; font-weight:bold; border:none; border-radius:50px; cursor:pointer; font-size:1.2rem; box-shadow: 0 0 20px #ff69b4; transition:0.3s; display:none; }
     #start-btn:hover { transform: scale(1.1); box-shadow: 0 0 40px #ff4500; }
 
     /* Birthday Message Section */
@@ -36,7 +36,7 @@
     /* Responsive */
     @media(max-width:768px) {
       #landing h1 { font-size:3rem; }
-      #countdown { font-size:1.5rem; }
+      #countdown { font-size:4rem; }
       #birthday-msg { font-size:1.5rem; }
       #start-btn { font-size:1rem; padding:12px 25px; }
     }
@@ -50,7 +50,7 @@
   <!-- Landing Section -->
   <div id="landing">
     <h1>Happy Birthday, Geet! 🎉</h1>
-    <div id="countdown">Loading...</div>
+    <div id="countdown">3</div>
     <button id="start-btn">✨ Open Your Surprise ✨</button>
     <audio id="bg-music" src="birthday-song.mp3" loop></audio>
   </div>
@@ -64,27 +64,26 @@
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script>
-    // Countdown Timer
     const countdownEl = document.getElementById('countdown');
-    const targetDate = new Date();
-    targetDate.setSeconds(targetDate.getSeconds() + 10); // 10-second countdown
-    let countdownInterval = setInterval(() => {
-      const now = new Date();
-      const diff = targetDate - now;
-      if(diff <= 0){
-        clearInterval(countdownInterval);
-        countdownEl.innerHTML = "🎉 It's Time! 🎉";
-      } else {
-        const seconds = Math.floor(diff/1000);
-        countdownEl.innerHTML = `⏳ ${seconds} seconds`;
-      }
-    }, 1000);
-
-    // Start Button
     const startBtn = document.getElementById('start-btn');
     const landing = document.getElementById('landing');
     const messageSection = document.getElementById('message-section');
     const bgMusic = document.getElementById('bg-music');
+
+    // 3 2 1 Countdown
+    let countdown = 3;
+    const countdownInterval = setInterval(() => {
+      countdown--;
+      if(countdown > 0){
+        countdownEl.innerText = countdown;
+      } else {
+        clearInterval(countdownInterval);
+        countdownEl.style.display = 'none';
+        startBtn.style.display = 'inline-block';
+      }
+    }, 1000);
+
+    // Start Button click
     startBtn.onclick = () => {
       landing.style.display = 'none';
       messageSection.style.display = 'flex';
@@ -113,9 +112,7 @@
       const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 999 };
       const interval = setInterval(function() {
         const timeLeft = animationEnd - Date.now();
-        if(timeLeft <= 0){
-          return clearInterval(interval);
-        }
+        if(timeLeft <= 0) return clearInterval(interval);
         const particleCount = 50 * (timeLeft / duration);
         confetti({...defaults, particleCount, origin:{x:Math.random(), y:Math.random()-0.2}});
       }, 250);
