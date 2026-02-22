@@ -94,9 +94,9 @@ p {
 
   </style>
 </head>
-<body>  <!-- COUNTDOWN -->  <div class="countdown">
-    <div class="countdown-number" id="count">3</div>
-  </div>  <!-- CARD -->  <div class="card">
+<body><!-- CARD -->
+
+  <div class="card">
     <div class="balloons">🎈🎉🎂</div>
     <h1 class="title">HAPPY BIRTHDAY GEET</h1>
     <p class="subtitle">A beautiful lady was born today ✨</p>
@@ -109,21 +109,5 @@ p {
       You deserve every amazing moment today brings.
     </p>
     <div class="footer">— With love 💖</div>
-  </div>  <script>
-    const countEl = document.getElementById('count');
-    let count = 3;
-
-    const interval = setInterval(() => {
-      count--;
-      if (count > 0) {
-        countEl.textContent = count;
-        countEl.style.animation = 'none';
-        void countEl.offsetWidth;
-        countEl.style.animation = 'scaleFade 1s ease-in-out forwards';
-      } else {
-        clearInterval(interval);
-        countEl.textContent = '🎉';
-      }
-    }, 1000);
-  </script></body>
+  </div></body>
 </html>
