@@ -5,33 +5,28 @@
   <title>Happy Birthday!</title>
   <style>
     * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { margin:0; height:100vh; overflow:hidden; display:flex; align-items:center; justify-content:center; background: radial-gradient(circle at top, #1a1a1a, #000000); }/* COUNTDOWN SCREEN */
-.countdown { position: fixed; inset:0; display:flex; align-items:center; justify-content:center; background: radial-gradient(circle at top, #1a1a1a, #000000); z-index:10; }
+    body { margin:0; height:100vh; overflow:hidden; display:flex; align-items:center; justify-content:center; background: radial-gradient(circle at top, #1a1a1a, #000000); }.countdown { position: fixed; inset:0; display:flex; align-items:center; justify-content:center; background: radial-gradient(circle at top, #1a1a1a, #000000); z-index:10; }
 .countdown-number { font-size:6rem; color:#ff6fb1; font-weight:bold; animation: scaleFade 1s ease-in-out forwards; text-shadow:0 0 20px rgba(255,111,177,0.8),0 0 40px rgba(168,85,247,0.6); }
 @keyframes scaleFade { 0% { transform: scale(0.5); opacity:0; } 50% { transform: scale(1.3); opacity:1; } 100% { transform: scale(1); opacity:0; } }
 
-/* CARD */
 .card { background: linear-gradient(180deg, #1b1b1b, #0f0f0f); width:320px; padding:28px; border-radius:28px; text-align:center; box-shadow:0 30px 80px rgba(255,95,158,0.25); animation: float 4s ease-in-out infinite; }
 @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-12px);} }
-
 .balloons { font-size:2.6rem; margin-bottom:10px; }
 .title { margin:10px 0; font-size:2rem; color:#ff6fb1; font-weight:800; letter-spacing:1px; text-shadow:0 0 12px rgba(255,111,177,0.6); }
 .subtitle { font-size:1.15rem; color:#d7a1ff; margin-bottom:24px; font-weight:600; letter-spacing:0.6px; text-shadow:0 0 10px rgba(215,161,255,0.6); }
 .subtitle::before, .subtitle::after { content:"✦"; color:#ff8fd8; margin:0 8px; }
-
 .subtitle-second { margin-top:-10px; color:#d18eff; font-size:1.05rem; font-weight:500; letter-spacing:0.5px; text-shadow:0 0 8px rgba(209,142,255,0.6); }
-
 .surprise-btn { position:relative; padding:14px 28px; border-radius:999px; border:none; font-size:1.05rem; cursor:pointer; background: linear-gradient(135deg, #ff4fd8, #a855f7); color:white; font-weight:600; box-shadow:0 0 25px rgba(255,79,216,0.6); transition:transform 0.25s ease, box-shadow 0.25s ease; animation: pulse 2s infinite; }
 .surprise-btn:hover { transform: scale(1.06); box-shadow:0 0 40px rgba(168,85,247,0.8); }
 @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(255,79,216,0.6);} 70%{box-shadow:0 0 0 18px rgba(255,79,216,0);} 100%{box-shadow:0 0 0 0 rgba(255,79,216,0);} }
 
 /* CAKE PAGE */
 .cake-page { display:none; flex-direction:column; align-items:center; justify-content:center; animation:fadeIn 0.8s ease forwards; }
-.cake { width:120px; height:120px; background:#4a2f1d; border-radius:50%; position:relative; margin-bottom:20px; }
-.cake::before { content:""; position:absolute; top:-10px; left:0; width:100%; height:20px; background:white; border-radius:50%; }
-.candle { position:absolute; top:-15px; left:50%; transform:translateX(-50%); width:8px; height:20px; background:red; border-radius:4px; }
+.cake { width:150px; height:120px; background: linear-gradient(to bottom, #4b2e1a 0%, #2c1a0f 100%); border-radius:8px; position:relative; margin-bottom:20px; box-shadow:0 8px 20px rgba(0,0,0,0.6); }
+.cake::before { content:""; position:absolute; top:-20px; left:0; width:100%; height:20px; background:white; border-radius:6px; }
+.cake::after { content:""; position:absolute; bottom:0; left:0; width:100%; height:20px; background:linear-gradient(to bottom, #4b2e1a, #2c1a0f); border-radius:0 0 8px 8px; }
+.candle { position:absolute; top:-25px; left:50%; transform:translateX(-50%); width:10px; height:25px; background:red; border-radius:4px; }
 .light-btn { padding:12px 28px; border:none; border-radius:999px; font-size:1rem; cursor:pointer; background: linear-gradient(135deg, #ff4fd8, #a855f7); color:white; font-weight:600; box-shadow:0 0 25px rgba(255,79,216,0.6); }
-
 @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
 
   </style>
