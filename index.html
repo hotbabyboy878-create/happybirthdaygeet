@@ -9,16 +9,17 @@
   * { margin:0; padding:0; box-sizing:border-box; }
   html, body { width:100%; height:100%; overflow:hidden; background:#111; font-family:'Poppins', sans-serif; display:flex; justify-content:center; align-items:center; flex-direction:column; color:#fff; }
 
-  #timer3to1 { font-size:6rem; text-shadow:2px 2px 20px #ff69b4; }
-  #birthday-text { font-family:'Sacramento', cursive; font-size:4rem; color:#ff69b4; text-shadow:2px 2px 15px #ff69b4; display:none; margin-bottom:20px; text-align:center; }
+  #timer3to1 { font-size:6rem; text-shadow:2px 2px 20px #ff69b4; display:block; }
+  #birthday-text { font-family:'Sacramento', cursive; font-size:4rem; color:#ff69b4; text-shadow:2px 2px 15px #ff69b4; display:none; text-align:center; margin-bottom:20px; }
   #second-timer { font-size:2.5rem; text-shadow:1px 1px 10px #ff69b4; display:none; margin-bottom:30px; }
   #start-btn { display:none; padding:15px 30px; font-size:1.5rem; border:none; border-radius:50px; cursor:pointer; font-weight:bold; background:linear-gradient(45deg,#ff69b4,#ff4500); box-shadow:0 0 20px #ff69b4; transition:0.3s; }
   #start-btn:hover { transform:scale(1.1); box-shadow:0 0 40px #ff4500; }
 
   #confetti-canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:999; }
 
-  .balloon { position:absolute; font-size:2rem; animation:float 6s linear infinite; }
-  @keyframes float { 0% { transform:translateY(0) rotate(0deg); opacity:1 } 100% { transform:translateY(-100vh) rotate(360deg); opacity:0 } }
+  .balloon { position:absolute; bottom:0; animation:floatUp 6s linear forwards; font-size:2rem; }
+  @keyframes floatUp { 0% { transform:translateY(0) rotate(0deg); opacity:1; } 100% { transform:translateY(-100vh) rotate(360deg); opacity:0; } }
+
 </style>
 </head>
 <body>
@@ -38,7 +39,6 @@
   const secondTimer = document.getElementById('second-timer');
   const startBtn = document.getElementById('start-btn');
   const bgMusic = document.getElementById('bg-music');
-  const confettiCanvas = document.getElementById('confetti-canvas');
 
   // 3-2-1 Countdown
   let count = 3;
@@ -75,7 +75,7 @@
     secondTimer.style.display = 'none';
     startBtn.style.display = 'none';
     bgMusic.play();
-    // You can continue with typewriter message or next page here
+    // Continue with typewriter message or next page here
   };
 
   // Confetti
@@ -91,18 +91,19 @@
     },250);
   }
 
-  // Balloons
+  // Balloons from bottom
   function spawnBalloons(){
     setInterval(()=>{
       const balloon = document.createElement('div');
       balloon.className='balloon';
-      balloon.style.left=Math.random()*100+'vw';
+      balloon.style.left=Math.random()*90+'vw';
       balloon.style.fontSize=Math.random()*20+20+'px';
       balloon.innerHTML='🎈';
       document.body.appendChild(balloon);
       setTimeout(()=>balloon.remove(),6000);
     },500);
   }
+
 </script>
 </body>
 </html>
