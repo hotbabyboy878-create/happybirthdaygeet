@@ -1,65 +1,137 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Happy Birthday!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sacramento&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { margin:0; height:100vh; overflow:hidden; display:flex; align-items:center; justify-content:center; background: radial-gradient(circle at top, #1a1a1a, #000000); }.countdown { position: fixed; inset:0; display:flex; align-items:center; justify-content:center; background: radial-gradient(circle at top, #1a1a1a, #000000); z-index:10; }
-.countdown-number { font-size:6rem; color:#ff6fb1; font-weight:bold; animation: scaleFade 1s ease-in-out forwards; text-shadow:0 0 20px rgba(255,111,177,0.8),0 0 40px rgba(168,85,247,0.6); }
-@keyframes scaleFade { 0% { transform: scale(0.5); opacity:0; } 50% { transform: scale(1.3); opacity:1; } 100% { transform: scale(1); opacity:0; } }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body, html { height:100%; font-family: 'Poppins', sans-serif; overflow-x:hidden; background: linear-gradient(135deg, #fbc2eb, #a6c1ee); }
 
-.card { background: linear-gradient(180deg, #1b1b1b, #0f0f0f); width:320px; padding:28px; border-radius:28px; text-align:center; box-shadow:0 30px 80px rgba(255,95,158,0.25); animation: float 4s ease-in-out infinite; }
-@keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-12px);} }
-.balloons { font-size:2.6rem; margin-bottom:10px; }
-.title { margin:10px 0; font-size:2rem; color:#ff6fb1; font-weight:800; letter-spacing:1px; text-shadow:0 0 12px rgba(255,111,177,0.6); }
-.subtitle { font-size:1.15rem; color:#d7a1ff; margin-bottom:24px; font-weight:600; letter-spacing:0.6px; text-shadow:0 0 10px rgba(215,161,255,0.6); }
-.subtitle::before, .subtitle::after { content:"✦"; color:#ff8fd8; margin:0 8px; }
-.subtitle-second { margin-top:-10px; color:#d18eff; font-size:1.05rem; font-weight:500; letter-spacing:0.5px; text-shadow:0 0 8px rgba(209,142,255,0.6); }
-.surprise-btn { position:relative; padding:14px 28px; border-radius:999px; border:none; font-size:1.05rem; cursor:pointer; background: linear-gradient(135deg, #ff4fd8, #a855f7); color:white; font-weight:600; box-shadow:0 0 25px rgba(255,79,216,0.6); transition:transform 0.25s ease, box-shadow 0.25s ease; animation: pulse 2s infinite; }
-.surprise-btn:hover { transform: scale(1.06); box-shadow:0 0 40px rgba(168,85,247,0.8); }
-@keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(255,79,216,0.6);} 70%{box-shadow:0 0 0 18px rgba(255,79,216,0);} 100%{box-shadow:0 0 0 0 rgba(255,79,216,0);} }
+    /* Landing Section */
+    #landing { display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; text-align:center; color:#fff; position:relative; }
+    #landing h1 { font-family: 'Sacramento', cursive; font-size:4rem; margin-bottom:20px; text-shadow: 2px 2px 10px #ff5e5e; }
+    #countdown { font-size:2rem; margin-bottom:20px; }
+    #start-btn { padding:12px 25px; background:#fff; color:#ff5e5e; font-weight:bold; border:none; border-radius:25px; cursor:pointer; transition:0.3s; }
+    #start-btn:hover { background:#ff5e5e; color:#fff; }
 
-/* CAKE PAGE */
-.cake-page { display:none; flex-direction:column; align-items:center; justify-content:center; animation:fadeIn 0.8s ease forwards; }
-.cake { width:150px; height:120px; background: linear-gradient(to bottom, #4b2e1a 0%, #2c1a0f 100%); border-radius:8px; position:relative; margin-bottom:20px; box-shadow:0 8px 20px rgba(0,0,0,0.6); }
-.cake::before { content:""; position:absolute; top:-20px; left:0; width:100%; height:20px; background:white; border-radius:6px; }
-.cake::after { content:""; position:absolute; bottom:0; left:0; width:100%; height:20px; background:linear-gradient(to bottom, #4b2e1a, #2c1a0f); border-radius:0 0 8px 8px; }
-.candle { position:absolute; top:-25px; left:50%; transform:translateX(-50%); width:10px; height:25px; background:red; border-radius:4px; }
-.light-btn { padding:12px 28px; border:none; border-radius:999px; font-size:1rem; cursor:pointer; background: linear-gradient(135deg, #ff4fd8, #a855f7); color:white; font-weight:600; box-shadow:0 0 25px rgba(255,79,216,0.6); }
-@keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+    /* Birthday Message Section */
+    #message-section { display:none; flex-direction:column; justify-content:center; align-items:center; height:100vh; text-align:center; padding:20px; color:#fff; }
+    #birthday-msg { font-size:2rem; max-width:600px; text-shadow:1px 1px 5px #ff5e5e; }
 
+    /* Confetti canvas */
+    #confetti-canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:999; }
+
+    /* Footer */
+    #footer { text-align:center; padding:20px; color:#fff; font-size:1.2rem; }
+
+    /* Floating hearts */
+    .heart { position:absolute; font-size:1.5rem; animation:float 6s linear infinite; }
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); opacity:1; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity:0; }
+    }
+
+    /* Responsive */
+    @media(max-width:768px) {
+      #landing h1 { font-size:3rem; }
+      #countdown { font-size:1.5rem; }
+      #birthday-msg { font-size:1.5rem; }
+    }
   </style>
 </head>
-<body>  <div class="countdown" id="countdown">
-    <div class="countdown-number" id="count">3</div>
-  </div>  <div class="card" id="card">
-    <div class="balloons">🎈🎉🎂</div>
-    <h1 class="title">HAPPY BIRTHDAY GEET</h1>
-    <p class="subtitle">A beautiful lady was born today ✨</p>
-    <p class="subtitle-second">Yess, it's YOU Geet!</p>
-    <button class="surprise-btn" onclick="showCakePage()">Start the Surprise</button>
-  </div>  <div class="cake-page" id="cakePage">
-    <div class="cake"><div class="candle"></div></div>
-    <button class="light-btn">Light the Candle</button>
-  </div>  <script>
-    const countEl = document.getElementById('count');
-    const countdown = document.getElementById('countdown');
-    let count = 3;
-    const interval = setInterval(()=>{
-      count--;
-      if(count>0){
-        countEl.textContent=count;
-        countEl.style.animation='none'; void countEl.offsetWidth; countEl.style.animation='scaleFade 1s ease-in-out forwards';
-      } else {
-        clearInterval(interval);
-        countdown.style.display='none';
-      }
-    },1000);
+<body>
 
-    function showCakePage(){
-      document.getElementById('card').style.display='none';
-      document.getElementById('cakePage').style.display='flex';
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Landing Section -->
+  <div id="landing">
+    <h1>Happy Birthday, [Name]!</h1>
+    <div id="countdown">Loading...</div>
+    <button id="start-btn">Open Your Surprise 🎉</button>
+    <audio id="bg-music" src="birthday-song.mp3" loop></audio>
+  </div>
+
+  <!-- Birthday Message Section -->
+  <div id="message-section">
+    <div id="birthday-msg"></div>
+    <div id="footer">🎈 Made with love just for you! 🎈</div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    // Countdown Timer
+    const countdownEl = document.getElementById('countdown');
+    const targetDate = new Date();
+    targetDate.setSeconds(targetDate.getSeconds() + 10); // 10-second countdown
+    let countdownInterval = setInterval(() => {
+      const now = new Date();
+      const diff = targetDate - now;
+      if(diff <= 0){
+        clearInterval(countdownInterval);
+        countdownEl.innerHTML = "🎉 It's Time! 🎉";
+      } else {
+        const seconds = Math.floor(diff/1000);
+        countdownEl.innerHTML = `⏳ ${seconds} seconds`;
+      }
+    }, 1000);
+
+    // Start Button
+    const startBtn = document.getElementById('start-btn');
+    const landing = document.getElementById('landing');
+    const messageSection = document.getElementById('message-section');
+    const bgMusic = document.getElementById('bg-music');
+    startBtn.onclick = () => {
+      landing.style.display = 'none';
+      messageSection.style.display = 'flex';
+      bgMusic.play();
+      typeWriter();
+      launchConfetti();
+      spawnHearts();
+    };
+
+    // Typewriter Effect
+    const birthdayMsg = document.getElementById('birthday-msg');
+    const message = "Wishing you a day filled with love, laughter, and endless joy! Happy Birthday! 🎂🎉❤️";
+    let i = 0;
+    function typeWriter(){
+      if(i < message.length){
+        birthdayMsg.innerHTML += message.charAt(i);
+        i++;
+        setTimeout(typeWriter, 80);
+      }
     }
-  </script></body>
+
+    // Confetti
+    function launchConfetti(){
+      const duration = 5 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 999 };
+      const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+        if(timeLeft <= 0){
+          return clearInterval(interval);
+        }
+        const particleCount = 50 * (timeLeft / duration);
+        confetti({...defaults, particleCount, origin:{x:Math.random(), y:Math.random()-0.2}});
+      }, 250);
+    }
+
+    // Floating Hearts
+    function spawnHearts(){
+      setInterval(() => {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.fontSize = Math.random()*20+15 + 'px';
+        heart.innerHTML = '❤️';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+      }, 500);
+    }
+  </script>
+</body>
 </html>
