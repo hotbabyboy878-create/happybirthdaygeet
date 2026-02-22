@@ -26,8 +26,6 @@
   justify-content: center;
   background: radial-gradient(circle at top, #ff758c, #ff7eb3);
   z-index: 10;
-  animation: fadeOut 1s ease forwards;
-  animation-delay: 3.5s;
 }
 
 .countdown-number {
@@ -41,10 +39,6 @@
   0% { transform: scale(0.5); opacity: 0; }
   50% { transform: scale(1.2); opacity: 1; }
   100% { transform: scale(1); opacity: 0; }
-}
-
-@keyframes fadeOut {
-  to { opacity: 0; visibility: hidden; }
 }
 
 /* CARD */
@@ -63,51 +57,70 @@
   50% { transform: translateY(-10px); }
 }
 
-h1 {
-  margin: 0 0 12px;
-  font-size: 2rem;
-  color: #ff5f7e;
-}
-
-p {
-  font-size: 1rem;
-  color: #555;
-  line-height: 1.5;
-}
-
 .balloons {
   font-size: 2.5rem;
   margin-bottom: 12px;
-  animation: pop 2s infinite alternate;
 }
 
-@keyframes pop {
-  from { transform: scale(1); }
-  to { transform: scale(1.1); }
+.title {
+  margin: 10px 0 8px;
+  font-size: 1.9rem;
+  color: #ff5f7e;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+.surprise-btn {
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  color: white;
 }
 
 .footer {
-  margin-top: 16px;
-  font-size: 0.9rem;
+  margin-top: 14px;
+  font-size: 0.95rem;
   color: #888;
 }
 
   </style>
 </head>
-<body><!-- CARD -->
-
-  <div class="card">
+<body>  <!-- COUNTDOWN -->  <div class="countdown" id="countdown">
+    <div class="countdown-number" id="count">3</div>
+  </div>  <!-- CARD -->  <div class="card">
     <div class="balloons">🎈🎉🎂</div>
     <h1 class="title">HAPPY BIRTHDAY GEET</h1>
     <p class="subtitle">A beautiful lady was born today ✨</p>
     <button class="surprise-btn" onclick="showSurprise()">Click for a Surprise</button>
-    <div class="footer" id="surprise" style="display:none; margin-top:14px;">🎁 May your life be filled with love, joy, and endless smiles 💖</div>
-  </div>
-    <h1>Happy Birthday!</h1>
-    <p>
-      Wishing you a day filled with laughter, cake, surprises, and all the good vibes.
-      You deserve every amazing moment today brings.
-    </p>
-    <div class="footer">— With love 💖</div>
-  </div></body>
+    <div class="footer" id="surprise" style="display:none;">🎁 May your life be filled with love, joy, and endless smiles 💖</div>
+  </div>  <script>
+    const countEl = document.getElementById('count');
+    const countdown = document.getElementById('countdown');
+    let count = 3;
+
+    const interval = setInterval(() => {
+      count--;
+      if (count > 0) {
+        countEl.textContent = count;
+        countEl.style.animation = 'none';
+        void countEl.offsetWidth;
+        countEl.style.animation = 'scaleFade 1s ease-in-out forwards';
+      } else {
+        clearInterval(interval);
+        countdown.style.display = 'none';
+      }
+    }, 1000);
+
+    function showSurprise() {
+      document.getElementById('surprise').style.display = 'block';
+    }
+  </script></body>
 </html>
