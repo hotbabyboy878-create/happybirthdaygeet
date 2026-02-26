@@ -115,6 +115,8 @@ html, body {
   text-align: center;
   overflow: hidden;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 #page-title {
@@ -127,27 +129,33 @@ html, body {
   margin-top: 20px;
   font-size: 1.35rem;
   line-height: 2.2rem;
-  max-height: 57vh;
   overflow-y: auto;
+  flex: 1;               /* makes content fill available space */
   padding-right: 10px;
   text-align: left;
 }
 
 /* BOOK BUTTONS */
 .book-buttons {
-  margin-top: 20px;
+  margin-top: 15px;
   display: flex;
   justify-content: space-between;
+  flex-shrink: 0;
 }
 
 .book-buttons button {
-  padding: 10px 22px;
+  padding: 12px 28px;
   border-radius: 30px;
   border: none;
   background: var(--accent);
   color: white;
   font-weight: 600;
   cursor: pointer;
+  font-size: 1rem;
+}
+
+.book-buttons button:hover {
+  transform: scale(1.05);
 }
 
 </style>
@@ -221,7 +229,7 @@ startBtn.onclick = () => {
   subText.style.display = "none";
   secondTimer.style.display = "none";
   startBtn.style.display = "none";
-  book.style.display = "block";
+  book.style.display = "flex";
   renderPage();
 };
 
