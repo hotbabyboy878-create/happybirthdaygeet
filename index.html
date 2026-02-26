@@ -42,7 +42,7 @@ html, body {
   color: var(--primary);
 }
 
-/* TEXT */
+/* BIRTHDAY TEXT */
 #birthday-text {
   display: none;
   font-family: 'Playfair Display', serif;
@@ -65,6 +65,7 @@ html, body {
   font-weight: 600;
 }
 
+/* BUTTON */
 #start-btn {
   display: none;
   margin-top: 25px;
@@ -78,6 +79,22 @@ html, body {
   cursor: pointer;
 }
 
+/* BALLOONS */
+.balloon {
+  position: absolute;
+  bottom: -50px;
+  font-size: 2rem;
+  animation: floatUp 6s linear forwards;
+  z-index: 0;
+}
+
+@keyframes floatUp {
+  to {
+    transform: translateY(-110vh);
+    opacity: 0;
+  }
+}
+
 /* BOOK */
 #book-container {
   display: none;
@@ -87,9 +104,12 @@ html, body {
   background: var(--card);
   border-radius: 18px;
   padding: 30px 35px;
-  overflow: hidden; /* CRITICAL */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
+/* BOOK CONTENT */
 #page-title {
   font-family: 'Playfair Display', serif;
   font-size: 2.8rem;
@@ -98,22 +118,28 @@ html, body {
   text-align: center;
 }
 
-/* 🔥 REAL FIX IS HERE */
 #page-content {
-  height: calc(80vh - 220px); /* LOCKED HEIGHT */
+  flex: 1;
   overflow-y: auto;
   font-size: 1.35rem;
   line-height: 2.2rem;
-  padding-right: 12px;
-  word-break: break-word;
   white-space: pre-wrap;
+  word-break: break-word;
+  padding-right: 12px;
 }
 
-/* BUTTONS */
+/* PAGE NUMBER */
+#page-number {
+  text-align: center;
+  margin: 10px 0;
+  font-weight: 600;
+}
+
+/* BOOK BUTTONS */
 .book-buttons {
-  margin-top: 18px;
   display: flex;
   justify-content: space-between;
+  margin-top: 10px;
 }
 
 .book-buttons button {
@@ -142,9 +168,11 @@ html, body {
 
 <button id="start-btn">Open Your Surprise</button>
 
+<!-- BOOK -->
 <div id="book-container">
   <h1 id="page-title"></h1>
   <div id="page-content"></div>
+  <div id="page-number"></div>
 
   <div class="book-buttons">
     <button onclick="prevPage()">⬅ Previous</button>
@@ -161,6 +189,7 @@ const subText = document.getElementById("sub-text");
 const secondTimer = document.getElementById("second-timer");
 const startBtn = document.getElementById("start-btn");
 const book = document.getElementById("book-container");
+const pageNumber = document.getElementById("page-number");
 
 let count = 3;
 const mainTimer = setInterval(() => {
@@ -173,6 +202,7 @@ const mainTimer = setInterval(() => {
     subText.style.display = "block";
     secondTimer.style.display = "block";
     confetti();
+    balloons();
     startSecond();
   }
 }, 1000);
@@ -195,17 +225,29 @@ startBtn.onclick = () => {
   subText.style.display = "none";
   secondTimer.style.display = "none";
   startBtn.style.display = "none";
-  book.style.display = "block";
+  book.style.display = "flex";
   renderPage();
 };
 
+function balloons() {
+  setInterval(() => {
+    const b = document.createElement("div");
+    b.className = "balloon";
+    b.innerHTML = "🎈";
+    b.style.left = Math.random() * 90 + "vw";
+    document.body.appendChild(b);
+    setTimeout(() => b.remove(), 6000);
+  }, 500);
+}
+
+/* BOOK DATA */
 const pages = [
-  { title: "Happy Birthday Geet 💖", content: `Hiii Geet Rani Happy Birthday 🎈🎂...` },
-  { title: "Why do I love you? 💗", content: `Okay so why do I love you?...` },
-  { title: "What can I do for you and who are you to me? 💝", content: `Hey Geet,...` },
-  { title: "My Poetries for You ✍🏻", content: `Writing poetries is not easy for me...` },
-  { title: "A Wish for You 💗", content: `Geet, On your special day...` },
-  { title: "A Note for You 💝", content: `Geet, I know sometimes your heart...` },
+  { title: "Happy Birthday Geet 💖", content: "Hiii Geet Rani Happy Birthday 🎈🎂 ..." },
+  { title: "Why do I love you? 💗", content: "Okay so why do I love you? ..." },
+  { title: "What can I do for you 💝", content: "Hey Geet, I hope you take a moment..." },
+  { title: "My Poetries for You ✍🏻", content: "Writing poetries is not easy for me..." },
+  { title: "A Wish for You 💗", content: "Geet, on your special day..." },
+  { title: "A Note for You 💝", content: "Geet, I know sometimes your heart..." }
 ];
 
 let i = 0;
@@ -215,6 +257,7 @@ const content = document.getElementById("page-content");
 function renderPage() {
   title.innerText = pages[i].title;
   content.innerText = pages[i].content;
+  pageNumber.innerText = `Page ${i + 1} of ${pages.length}`;
   content.scrollTop = 0;
 }
 
