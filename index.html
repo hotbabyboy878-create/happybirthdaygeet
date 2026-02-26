@@ -105,43 +105,40 @@ html, body {
 /* BOOK */
 #book-container {
   display: none;
-  width: 70vw;
-  max-width: 550px;
-  height: 55vh;
+  width: 75vw;
+  max-width: 600px;
+  height: 60vh;
   background: var(--card);
   border-radius: 16px;
-  padding: 20px;
+  padding: 30px;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 #page-title {
   font-family: 'Playfair Display', serif;
-  font-size: 2rem;
+  font-size: 2.6rem;
   color: var(--primary);
 }
 
 #page-content {
-  margin-top: 10px;
-  font-size: 1.1rem;
-  line-height: 1.8rem;
-  flex: 1;
+  margin-top: 15px;
+  font-size: 1.3rem;
+  line-height: 2.1rem;
+  max-height: 32vh;
   overflow-y: auto;
   text-align: left;
-  padding-right: 5px;
+  padding-right: 5px; /* prevent scrollbar overlap */
 }
 
 /* BOOK BUTTONS */
 .book-buttons {
-  margin-top: 10px;
+  margin-top: 20px;
   display: flex;
   justify-content: space-between;
 }
 
 .book-buttons button {
-  padding: 8px 20px;
+  padding: 10px 22px;
   border-radius: 30px;
   border: none;
   background: var(--accent);
@@ -150,12 +147,12 @@ html, body {
   cursor: pointer;
 }
 
+/* PAGE NUMBER */
 #page-number {
-  text-align: center;
-  margin-top: 5px;
+  margin-top: 10px;
   font-weight: 600;
+  color: var(--primary);
 }
-
 </style>
 </head>
 
@@ -181,6 +178,7 @@ html, body {
     <button onclick="prevPage()">⬅ Previous</button>
     <button onclick="nextPage()">Next ➡</button>
   </div>
+
   <div id="page-number"></div>
 </div>
 
@@ -193,16 +191,12 @@ const subText = document.getElementById("sub-text");
 const secondTimer = document.getElementById("second-timer");
 const startBtn = document.getElementById("start-btn");
 const book = document.getElementById("book-container");
-const pageNumber = document.getElementById("page-number");
 
 let count = 3;
-timer3to1.innerText = count;
-
 const mainTimer = setInterval(() => {
   count--;
-  if (count > 0) {
-    timer3to1.innerText = count;
-  } else {
+  if (count > 0) timer3to1.innerText = count;
+  else {
     clearInterval(mainTimer);
     timer3to1.style.display = "none";
     birthdayText.style.display = "block";
@@ -219,9 +213,8 @@ function startSecond() {
   secondTimer.innerText = s;
   const t = setInterval(() => {
     s--;
-    if (s >= 0) {
-      secondTimer.innerText = s;
-    } else {
+    if (s >= 0) secondTimer.innerText = s;
+    else {
       clearInterval(t);
       startBtn.style.display = "inline-block";
     }
@@ -233,7 +226,7 @@ startBtn.onclick = () => {
   subText.style.display = "none";
   secondTimer.style.display = "none";
   startBtn.style.display = "none";
-  book.style.display = "flex";
+  book.style.display = "block";
   renderPage();
 };
 
@@ -440,6 +433,7 @@ your smiles wider, and your life sweeter.` },
 let i = 0;
 const title = document.getElementById("page-title");
 const content = document.getElementById("page-content");
+const pageNumber = document.getElementById("page-number");
 
 function renderPage() {
   title.innerText = pages[i].title;
@@ -448,4 +442,16 @@ function renderPage() {
   pageNumber.innerText = `Page ${i + 1} of ${pages.length}`;
 }
 
-function nextPage()
+function nextPage() {
+  if (i < pages.length - 1) i++;
+  renderPage();
+}
+
+function prevPage() {
+  if (i > 0) i--;
+  renderPage();
+}
+</script>
+
+</body>
+</html>
