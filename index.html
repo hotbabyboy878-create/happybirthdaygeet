@@ -42,7 +42,7 @@ html, body {
   color: var(--primary);
 }
 
-/* BIRTHDAY TEXT */
+/* TEXT */
 #birthday-text {
   display: none;
   font-family: 'Playfair Display', serif;
@@ -95,41 +95,43 @@ html, body {
   }
 }
 
-/* BOOK — IMPORTANT FIX HERE */
+/* BOOK */
 #book-container {
-  display: none;          /* ONLY hidden initially */
-  width: 85vw;
-  max-width: 900px;
-  height: 80vh;
+  display: none;
+  width: 80vw;
+  max-width: 820px;
+  height: 70vh;
   background: var(--card);
   border-radius: 18px;
-  padding: 30px 35px;
+  padding: 25px 30px;
   overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
 }
 
 /* BOOK CONTENT */
 #page-title {
   font-family: 'Playfair Display', serif;
-  font-size: 2.8rem;
+  font-size: 2.6rem;
   color: var(--primary);
-  margin-bottom: 15px;
   text-align: center;
+  margin-bottom: 12px;
 }
 
 #page-content {
-  height: calc(100% - 140px);
+  flex: 1;
   overflow-y: auto;
-  font-size: 1.35rem;
-  line-height: 2.2rem;
+  font-size: 1.3rem;
+  line-height: 2.1rem;
   white-space: pre-wrap;
   word-break: break-word;
-  padding-right: 12px;
+  padding-right: 10px;
 }
 
-/* PAGE NUMBER */
 #page-number {
   text-align: center;
-  margin: 10px 0;
+  margin: 8px 0;
   font-weight: 600;
 }
 
@@ -137,6 +139,7 @@ html, body {
 .book-buttons {
   display: flex;
   justify-content: space-between;
+  margin-top: 10px;
 }
 
 .book-buttons button {
@@ -165,7 +168,6 @@ html, body {
 
 <button id="start-btn">Open Your Surprise</button>
 
-<!-- BOOK -->
 <div id="book-container">
   <h1 id="page-title"></h1>
   <div id="page-content"></div>
@@ -222,8 +224,7 @@ startBtn.onclick = () => {
   subText.style.display = "none";
   secondTimer.style.display = "none";
   startBtn.style.display = "none";
-
-  book.style.display = "block";   // 👈 show book ONLY here
+  book.style.display = "flex";
   renderPage();
 };
 
@@ -240,12 +241,11 @@ function balloons() {
 
 /* BOOK DATA */
 const pages = [
-  { title: "Happy Birthday Geet 💖", content: "Hiii Geet Rani Happy Birthday 🎈🎂..." },
-  { title: "Why do I love you? 💗", content: "Okay so why do I love you?..." },
-  { title: "What can I do for you 💝", content: "Hey Geet..." },
-  { title: "My Poetries for You ✍🏻", content: "Writing poetries is not easy..." },
-  { title: "A Wish for You 💗", content: "Geet, on your special day..." },
-  { title: "A Note for You 💝", content: "Geet, I know sometimes..." }
+  { title: "Happy Birthday Geet 💖", content: "Your birthday message here..." },
+  { title: "Why do I love you? 💗", content: "Your text here..." },
+  { title: "What can I do for you 💝", content: "Your emotional letter here..." },
+  { title: "My Poetries for You ✍🏻", content: "Your poetry page here..." },
+  { title: "A Wish for You 💗", content: "Your wish here..." }
 ];
 
 let i = 0;
