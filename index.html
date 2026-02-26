@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday Geet</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Sacramento&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 * {
@@ -19,7 +20,7 @@ html, body {
   height: 100%;
   overflow: hidden;
   background: #F4C2D7; /* blush pink */
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   color: #2b2b2b;
   display: flex;
   align-items: center;
@@ -27,15 +28,17 @@ html, body {
   flex-direction: column;
 }
 
-/* TEXT */
+/* TIMER 3 2 1 */
 #timer3to1 {
   font-size: 6rem;
+  font-weight: 600;
   text-shadow: 0 0 20px #e99abf;
 }
 
+/* BIRTHDAY TEXT */
 #birthday-text {
   display: none;
-  font-family: 'Sacramento', cursive;
+  font-family: 'Playfair Display', serif;
   font-size: 4rem;
   color: #c94f8d;
   text-align: center;
@@ -44,15 +47,17 @@ html, body {
 
 #sub-text {
   display: none;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   text-align: center;
-  max-width: 90vw;
+  max-width: 90%;
   margin-bottom: 20px;
 }
 
+/* SECOND TIMER */
 #second-timer {
   display: none;
   font-size: 2.5rem;
+  font-weight: 600;
   margin-bottom: 30px;
 }
 
@@ -60,12 +65,12 @@ html, body {
 #start-btn {
   display: none;
   padding: 15px 35px;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   border: none;
   border-radius: 50px;
   background: linear-gradient(45deg, #EFB3CC, #F6CCD9);
   color: #2b2b2b;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
   box-shadow: 0 0 20px #e7a7c5;
 }
@@ -77,45 +82,44 @@ html, body {
 /* BALLOONS */
 .balloon {
   position: absolute;
-  bottom: 0;
+  bottom: -50px;
   font-size: 2rem;
   animation: floatUp 6s linear forwards;
   z-index: 0;
 }
 
 @keyframes floatUp {
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(-110vh); opacity: 0; }
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-110vh); opacity: 0; }
 }
 
 /* BOOK */
 #book-container {
   display: none;
-  width: 70vw;
+  width: 75vw;
   max-width: 600px;
   height: 60vh;
   background: #FBE4EC;
-  border-radius: 12px;
+  border-radius: 15px;
   padding: 30px;
   box-shadow: 0 0 40px rgba(201,79,141,0.3);
-  z-index: 1;
   text-align: center;
+  z-index: 1;
 }
 
 #page-title {
-  font-family: 'Sacramento', cursive;
-  font-size: 3rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
   color: #c94f8d;
   margin-bottom: 15px;
 }
 
 #page-content {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   line-height: 2.2rem;
   max-height: 32vh;
   overflow-y: auto;
   padding-right: 10px;
-  color: #2b2b2b;
 }
 
 /* BOOK BUTTONS */
@@ -132,12 +136,8 @@ html, body {
   cursor: pointer;
   background: linear-gradient(45deg, #EFB3CC, #F6CCD9);
   color: #2b2b2b;
-  font-weight: bold;
+  font-weight: 600;
   box-shadow: 0 0 15px #e7a7c5;
-}
-
-.book-buttons button:hover {
-  transform: scale(1.05);
 }
 </style>
 </head>
@@ -146,14 +146,17 @@ html, body {
 
 <div id="timer3to1">3</div>
 
-<div id="birthday-text">Happy Birthday Geet 🎉</div>
+<div id="birthday-text">Happy Birthday Geet</div>
+
 <div id="sub-text">
   Today a beautiful lady was born and her name is Geet and even she is not aware of it
 </div>
+
 <div id="second-timer">15</div>
 
 <button id="start-btn">✨ Open Your Surprise ✨</button>
 
+<!-- BOOK -->
 <div id="book-container">
   <h1 id="page-title"></h1>
   <div id="page-content"></div>
@@ -214,11 +217,7 @@ startBtn.onclick = () => {
 };
 
 function launchConfetti() {
-  confetti({
-    particleCount: 200,
-    spread: 360,
-    origin: { y: 0.6 }
-  });
+  confetti({ particleCount: 200, spread: 360, origin: { y: 0.6 } });
 }
 
 function spawnBalloons() {
@@ -232,25 +231,22 @@ function spawnBalloons() {
   }, 500);
 }
 
+/* BOOK CONTENT */
 const pages = [
   {
     title: "Happy Birthday Geet 💖",
-    content: `Hiii Geet Rani Happy Birthday 🎈🎂, How aree youu Geet? I hope you are fine and doing well. I have made this website to wish you a very happy birthday and this is the only way to wish you and one of my favorite way to wish you, so Happy Birthday Geet. Always stay happy and keep smiling because you look even more beautiful when you are smiling..
-And I will always pray for your betterment, success. Goodluck for the Board Exams.`
+    content: `Hiii Geet Rani, Happy Birthday 🎂  
+I made this website only for you.  
+Always stay happy and keep smiling.`
   },
   {
     title: "Why do I love you? 💗",
-    content: `Okay so why do I love you? This time I'm saying this openly last time I said that I liked you but actually I love you and It's not only because that you are beautiful there are many reasons and the very main reason is that you are the first girl in my life whom I love and first love cannot be forgotten. You know the backstory that where I first saw you then fell in love with you but couldn't tell you that I was in love with you and then someone else stole you from mee and that's where I was heartbroken for the first time ever in my life and I still think that it was all my fault that I should have told you about it but I was too scared even I'm scared right now making this gift for you but I don't wanna lose you this time that's why I'm doing all this for you.
-I was so deeply in love with you that I used to find ways to impress you and make you happy when we were in 5th standard, and one day a friend of mine was telling me a poetry and that was the (mandir wali shayari) I liked it a lot and I remembered it in 2022 and then I used to tell this poetry all the time to everyone and I was so shocked that how much people like poetries and if I write poetries for you, you would be impressed by me. But our classes got separated and I couldn't tell the poetry but I used to read the poetries in front my friends which I wrote for you.
-And our classes got combined in 9th but at that time I was so scared to read it for you and I was kinda busy in my personal life and then I got to know that someone else has stolen you from me.`
-  },
-  {
-    title: "What can I do for you and who are you to me? 💝",
-    content: `Yeh bana rha hu abhi`
+    content: `This is where you can write anything you want.  
+Add as much text as you like — this page is scrollable.`
   },
   {
     title: "A Wish For You 🎉",
-    content: "May your life be filled with love, laughter, dreams fulfilled, and happiness beyond measure."
+    content: "May your life be filled with love, success, and happiness always."
   }
 ];
 
