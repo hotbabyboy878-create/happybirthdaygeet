@@ -105,27 +105,33 @@ html, body {
 /* BOOK */
 #book-container {
   display: none;
-  width: 75vw;
-  max-width: 600px;
-  height: 60vh;
+  width: 80vw;      /* bigger width */
+  max-width: 900px; /* bigger max width */
+  height: 75vh;     /* taller height */
   background: var(--card);
   border-radius: 16px;
-  padding: 30px;
+  padding: 30px 40px;
+  display: flex;
+  flex-direction: column;
   text-align: center;
+  overflow: hidden; /* prevent overflow outside */
 }
 
 #page-title {
   font-family: 'Playfair Display', serif;
-  font-size: 2.6rem;
+  font-size: 3rem;  /* bigger title */
   color: var(--primary);
+  margin-bottom: 20px;
 }
 
 #page-content {
-  margin-top: 15px;
-  font-size: 1.3rem;
-  line-height: 2.1rem;
-  max-height: 32vh;
-  overflow-y: auto;
+  flex: 1;            /* fill remaining height */
+  font-size: 1.35rem;
+  line-height: 2.2rem;
+  overflow-y: auto;   /* scroll for long text */
+  text-align: left;
+  word-wrap: break-word;
+  padding-right: 10px; /* prevent scrollbar overlapping text */
 }
 
 /* BOOK BUTTONS */
