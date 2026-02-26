@@ -8,12 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-
-/* =====================================================
-   THEME
-   ===================================================== */
-
-/* 🌹 Sage / Mint */
 :root {
   --bg: #EEF5F0;
   --card: #BFD8C2;
@@ -22,25 +16,19 @@
   --text: #2E4A3B;
 }
 
-/* ===================================================== */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 html, body {
   width: 100%;
   height: 100%;
-  overflow: hidden;
   background: var(--bg);
   font-family: 'Montserrat', sans-serif;
   color: var(--text);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
+  overflow: hidden;
 }
 
 /* TIMER */
@@ -50,13 +38,13 @@ html, body {
   color: var(--primary);
 }
 
-/* TEXT */
 #birthday-text {
   display: none;
   font-family: 'Playfair Display', serif;
   font-size: 4rem;
   color: var(--primary);
   text-align: center;
+  margin: 10px;
 }
 
 #sub-text {
@@ -64,27 +52,27 @@ html, body {
   font-size: 1.4rem;
   max-width: 90%;
   text-align: center;
-  margin: 15px 0;
+  margin: 10px 0;
 }
 
 #second-timer {
   display: none;
   font-size: 2.5rem;
   font-weight: 600;
+  margin: 15px 0;
 }
 
-/* BUTTON */
 #start-btn {
   display: none;
-  margin-top: 25px;
-  padding: 15px 35px;
-  border-radius: 50px;
+  padding: 15px 40px;
+  font-size: 1.3rem;
   border: none;
+  border-radius: 50px;
   background: var(--accent);
   color: white;
-  font-size: 1.3rem;
   font-weight: 600;
   cursor: pointer;
+  margin-top: 20px;
 }
 
 /* BALLOONS */
@@ -96,12 +84,7 @@ html, body {
   z-index: 0;
 }
 
-@keyframes floatUp {
-  to {
-    transform: translateY(-110vh);
-    opacity: 0;
-  }
-}
+@keyframes floatUp { to { transform: translateY(-110vh); opacity: 0; } }
 
 /* BOOK */
 #book-container {
@@ -111,18 +94,18 @@ html, body {
   height: 75vh;
   background: var(--card);
   border-radius: 16px;
-  padding: 35px 30px;
-  text-align: center;
-  overflow: hidden;
-  position: relative;
+  padding: 30px;
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 1;
 }
 
 #page-title {
   font-family: 'Playfair Display', serif;
   font-size: 3rem;
   color: var(--primary);
+  text-align: center;
 }
 
 #page-content {
@@ -130,16 +113,16 @@ html, body {
   font-size: 1.35rem;
   line-height: 2.2rem;
   overflow-y: auto;
-  flex: 1;               /* makes content fill available space */
+  flex: 1;
   padding-right: 10px;
   text-align: left;
 }
 
 /* BOOK BUTTONS */
 .book-buttons {
-  margin-top: 15px;
   display: flex;
   justify-content: space-between;
+  margin-top: 15px;
   flex-shrink: 0;
 }
 
@@ -150,35 +133,24 @@ html, body {
   background: var(--accent);
   color: white;
   font-weight: 600;
-  cursor: pointer;
   font-size: 1rem;
+  cursor: pointer;
 }
 
-.book-buttons button:hover {
-  transform: scale(1.05);
-}
-
+.book-buttons button:hover { transform: scale(1.05); }
 </style>
 </head>
-
 <body>
 
 <div id="timer3to1">3</div>
-
 <div id="birthday-text">Happy Birthday Geet</div>
-
-<div id="sub-text">
-  Today a beautiful lady was born and her name is Geet and even she is not aware of it
-</div>
-
+<div id="sub-text">Today a beautiful lady was born and her name is Geet and even she is not aware of it</div>
 <div id="second-timer">15</div>
-
 <button id="start-btn">Open Your Surprise</button>
 
 <div id="book-container">
   <h1 id="page-title"></h1>
   <div id="page-content"></div>
-
   <div class="book-buttons">
     <button onclick="prevPage()">⬅ Previous</button>
     <button onclick="nextPage()">Next ➡</button>
@@ -186,7 +158,6 @@ html, body {
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
 <script>
 const timer3to1 = document.getElementById("timer3to1");
 const birthdayText = document.getElementById("birthday-text");
@@ -206,7 +177,7 @@ const mainTimer = setInterval(() => {
     subText.style.display = "block";
     secondTimer.style.display = "block";
     confetti();
-    balloons();
+    spawnBalloons();
     startSecond();
   }
 }, 1000);
@@ -229,11 +200,11 @@ startBtn.onclick = () => {
   subText.style.display = "none";
   secondTimer.style.display = "none";
   startBtn.style.display = "none";
-  book.style.display = "flex";
+  book.style.display = "flex"; // show book only here
   renderPage();
 };
 
-function balloons() {
+function spawnBalloons() {
   setInterval(() => {
     const b = document.createElement("div");
     b.className = "balloon";
@@ -244,32 +215,14 @@ function balloons() {
   }, 500);
 }
 
-/* BOOK DATA */
+/* BOOK PAGES */
 const pages = [
-  { title: "Happy Birthday Geet 💖", content: `Hiii Geet Rani Happy Birthday 🎈🎂, How aree youu Geet? I hope you are fine and doing well. I have made this website to wish you a very happy birthday and this is the only way to wish you and one of my favorite way to wish you, so Happy Birthday Geet. Always stay happy and keep smiling because you look even more beautiful when you are smiling..
-And I will always pray for your betterment, success. Goodluck for the Board Exams.` },
-  { title: "Why do I love you? 💗", content: `Okay so why do I love you? This time I'm saying this openly last time I said that I liked you but actually I love you and It's not only because that you are beautiful there are many reasons and the very main reason is that you are the first girl in my life whom I love and first love cannot be forgotten...` },
-  { title: "What can I do for you and who are you to me? 💝", content: `Hey Geet,
-I hope you take a moment to read this slowly,
-because these are all the thoughts I’ve kept in my heart for so long...
-You are my happiness, my peace, my reason to smile...
-I want you to know that I can do anything for you...
-I am willing to change myself for you...
-If you want me to wait, I will wait...
-I just want to be someone who genuinely cares for you...` },
-  { title: "My Poetries for You (My First Act of Love) ✍🏻", content: `I just want you to know something.
-Writing poetries is not easy for me. Not at all...
-Every poetry I wrote, was my way of trying to make you smile...
-It was my first act of love.` },
-  { title: "A Wish for You 💗", content: `Geet,
-On your special day, I just want to tell you how truly amazing you are...
-I wish that every moment of your life is filled with happiness...
-Happy Birthday, Geet 🎉💖` },
-  { title: "A Note for You, Geet — Your Heart Deserves Happiness 💝", content: `Geet,
-I know sometimes your heart still carries shadows of the past...
-You are beautiful, kind, strong, and full of light...
-I promise, Geet, if you let your heart open even a little...
-Your heart is precious, and I’ll be here, hoping to be the one who makes your days brighter...` },
+  { title: "Happy Birthday Geet 💖", content: "Hiii Geet Rani Happy Birthday 🎈🎂 ..." },
+  { title: "Why do I love you? 💗", content: "Okay so why do I love you? ..." },
+  { title: "What can I do for you and who are you to me? 💝", content: "Hey Geet, I hope you take a moment..." },
+  { title: "My Poetries for You (My First Act of Love) ✍🏻", content: "Writing poetries is not easy for me. ..." },
+  { title: "A Wish for You 💗", content: "Geet, On your special day, I just want..." },
+  { title: "A Note for You, Geet — Your Heart Deserves Happiness 💝", content: "Geet, I know sometimes your heart..." },
 ];
 
 let i = 0;
@@ -282,16 +235,8 @@ function renderPage() {
   content.scrollTop = 0;
 }
 
-function nextPage() {
-  if (i < pages.length - 1) i++;
-  renderPage();
-}
-
-function prevPage() {
-  if (i > 0) i--;
-  renderPage();
-}
+function nextPage() { if (i < pages.length - 1) i++; renderPage(); }
+function prevPage() { if (i > 0) i--; renderPage(); }
 </script>
-
 </body>
 </html>
