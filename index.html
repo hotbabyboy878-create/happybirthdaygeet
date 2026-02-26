@@ -95,17 +95,15 @@ html, body {
   }
 }
 
-/* BOOK */
+/* BOOK — IMPORTANT FIX HERE */
 #book-container {
-  display: none;
+  display: none;          /* ONLY hidden initially */
   width: 85vw;
   max-width: 900px;
   height: 80vh;
   background: var(--card);
   border-radius: 18px;
   padding: 30px 35px;
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
 }
 
@@ -119,7 +117,7 @@ html, body {
 }
 
 #page-content {
-  flex: 1;
+  height: calc(100% - 140px);
   overflow-y: auto;
   font-size: 1.35rem;
   line-height: 2.2rem;
@@ -139,7 +137,6 @@ html, body {
 .book-buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
 }
 
 .book-buttons button {
@@ -225,7 +222,8 @@ startBtn.onclick = () => {
   subText.style.display = "none";
   secondTimer.style.display = "none";
   startBtn.style.display = "none";
-  book.style.display = "flex";
+
+  book.style.display = "block";   // 👈 show book ONLY here
   renderPage();
 };
 
@@ -242,12 +240,12 @@ function balloons() {
 
 /* BOOK DATA */
 const pages = [
-  { title: "Happy Birthday Geet 💖", content: "Hiii Geet Rani Happy Birthday 🎈🎂 ..." },
-  { title: "Why do I love you? 💗", content: "Okay so why do I love you? ..." },
-  { title: "What can I do for you 💝", content: "Hey Geet, I hope you take a moment..." },
-  { title: "My Poetries for You ✍🏻", content: "Writing poetries is not easy for me..." },
+  { title: "Happy Birthday Geet 💖", content: "Hiii Geet Rani Happy Birthday 🎈🎂..." },
+  { title: "Why do I love you? 💗", content: "Okay so why do I love you?..." },
+  { title: "What can I do for you 💝", content: "Hey Geet..." },
+  { title: "My Poetries for You ✍🏻", content: "Writing poetries is not easy..." },
   { title: "A Wish for You 💗", content: "Geet, on your special day..." },
-  { title: "A Note for You 💝", content: "Geet, I know sometimes your heart..." }
+  { title: "A Note for You 💝", content: "Geet, I know sometimes..." }
 ];
 
 let i = 0;
