@@ -93,35 +93,36 @@ html, body {
 
 #book-container {
   display: none;
-  width: 75vw;
+  width: 70vw;
   max-width: 600px;
   height: 60vh;
   background: var(--card);
   border-radius: 16px;
-  padding: 30px;
-  text-align: center;
+  padding: 20px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 #page-title {
   font-family: 'Playfair Display', serif;
-  font-size: 2.6rem;
+  font-size: 2rem;
   color: var(--primary);
+  text-align: center;
 }
 
 #page-content {
   margin-top: 15px;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   line-height: 1.8rem;
   overflow-y: auto;
-  flex: 1; /* ensures it fills remaining space */
+  flex: 1;
+  padding-right: 8px;
   text-align: left;
-  padding-right: 10px;
 }
 
 .book-buttons {
-  margin-top: 15px;
+  margin-top: 10px;
   display: flex;
   justify-content: space-between;
 }
@@ -137,7 +138,8 @@ html, body {
 }
 
 #page-number {
-  margin-top: 8px;
+  margin-top: 5px;
+  text-align: center;
   font-weight: 600;
   color: var(--primary);
 }
@@ -160,17 +162,14 @@ html, body {
 <div id="book-container">
   <h1 id="page-title"></h1>
   <div id="page-content"></div>
-
   <div class="book-buttons">
     <button onclick="prevPage()">⬅ Previous</button>
     <button onclick="nextPage()">Next ➡</button>
   </div>
-
   <div id="page-number"></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
 <script>
 const timer3to1 = document.getElementById("timer3to1");
 const birthdayText = document.getElementById("birthday-text");
@@ -228,11 +227,9 @@ function balloons() {
   }, 500);
 }
 
-/* BOOK DATA */
 const pages = [
-  { title: "Happy Birthday Geet 💖", content: `Hiii Geet Rani Happy Birthday 🎈🎂, How aree youu Geet? I hope you are fine and doing well. I have made this website to wish you a very happy birthday and this is the only way to wish you and one of my favorite way to wish you, so Happy Birthday Geet. Always stay happy and keep smiling because you look even more beautiful when you are smiling..
-And I will always pray for your betterment, success. Goodluck for the Board Exams.` },
-  { title: "Why do I love you? 💗", content: `Okay so why do I love you? ...` }, // truncated for brevity, keep all your original text
+  { title: "Happy Birthday Geet 💖", content: `Hiii Geet Rani Happy Birthday 🎈🎂 ...` },
+  { title: "Why do I love you? 💗", content: `Okay so why do I love you? ...` },
   { title: "What can I do for you and who are you to me? 💝", content: `Hey Geet, ...` },
   { title: "My Poetries for You (My First Act of Love) ✍🏻", content: `I just want you to know something...` },
   { title: "A Wish for You 💗", content: `Geet, On your special day...` },
@@ -252,7 +249,7 @@ function renderPage() {
 }
 
 function nextPage() {
-  if(i < pages.length -1) i++;
+  if(i < pages.length - 1) i++;
   renderPage();
 }
 
