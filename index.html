@@ -16,27 +16,19 @@
   --text: #2E4A3B;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin:0; padding:0; box-sizing:border-box; }
 
 html, body {
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   background: var(--bg);
   font-family: 'Montserrat', sans-serif;
   color: var(--text);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  display: flex; justify-content: center; align-items: center; flex-direction: column;
   overflow: hidden;
 }
 
 /* TIMER */
-#timer3to1 {
-  font-size: 6rem;
-  font-weight: 600;
-  color: var(--primary);
-}
+#timer3to1 { font-size: 6rem; font-weight: 600; color: var(--primary); }
 
 #birthday-text {
   display: none;
@@ -73,6 +65,8 @@ html, body {
   font-weight: 600;
   cursor: pointer;
   margin-top: 20px;
+  z-index: 2;
+  position: relative;
 }
 
 /* BALLOONS */
@@ -167,9 +161,11 @@ const startBtn = document.getElementById("start-btn");
 const book = document.getElementById("book-container");
 
 let count = 3;
+
+// START 3-2-1 TIMER
 const mainTimer = setInterval(() => {
   count--;
-  if (count > 0) timer3to1.innerText = count;
+  if(count>0) timer3to1.innerText = count;
   else {
     clearInterval(mainTimer);
     timer3to1.style.display = "none";
@@ -178,65 +174,68 @@ const mainTimer = setInterval(() => {
     secondTimer.style.display = "block";
     confetti();
     spawnBalloons();
-    startSecond();
+    startSecondCountdown();
   }
-}, 1000);
+},1000);
 
-function startSecond() {
+// SECOND 15s TIMER
+function startSecondCountdown(){
   let s = 15;
   secondTimer.innerText = s;
-  const t = setInterval(() => {
+  const t = setInterval(()=>{
     s--;
-    if (s >= 0) secondTimer.innerText = s;
+    if(s>=0) secondTimer.innerText = s;
     else {
       clearInterval(t);
       startBtn.style.display = "inline-block";
     }
-  }, 1000);
+  },1000);
 }
 
+// SHOW BOOK ONLY ON BUTTON CLICK
 startBtn.onclick = () => {
   birthdayText.style.display = "none";
   subText.style.display = "none";
   secondTimer.style.display = "none";
   startBtn.style.display = "none";
-  book.style.display = "flex"; // show book only here
+  book.style.display = "flex";
   renderPage();
-};
+}
 
-function spawnBalloons() {
-  setInterval(() => {
+// BALLOONS SPAWN
+function spawnBalloons(){
+  setInterval(()=>{
     const b = document.createElement("div");
     b.className = "balloon";
     b.innerHTML = "🎈";
-    b.style.left = Math.random() * 90 + "vw";
+    b.style.left = Math.random()*90 + "vw";
     document.body.appendChild(b);
-    setTimeout(() => b.remove(), 6000);
-  }, 500);
+    setTimeout(()=>b.remove(),6000);
+  },500);
 }
 
 /* BOOK PAGES */
 const pages = [
-  { title: "Happy Birthday Geet 💖", content: "Hiii Geet Rani Happy Birthday 🎈🎂 ..." },
-  { title: "Why do I love you? 💗", content: "Okay so why do I love you? ..." },
-  { title: "What can I do for you and who are you to me? 💝", content: "Hey Geet, I hope you take a moment..." },
-  { title: "My Poetries for You (My First Act of Love) ✍🏻", content: "Writing poetries is not easy for me. ..." },
-  { title: "A Wish for You 💗", content: "Geet, On your special day, I just want..." },
-  { title: "A Note for You, Geet — Your Heart Deserves Happiness 💝", content: "Geet, I know sometimes your heart..." },
+  { title:"Happy Birthday Geet 💖", content:"Hiii Geet Rani Happy Birthday 🎈🎂 ..." },
+  { title:"Why do I love you? 💗", content:"Okay so why do I love you? ..." },
+  { title:"What can I do for you and who are you to me? 💝", content:"Hey Geet, I hope you take a moment..." },
+  { title:"My Poetries for You (My First Act of Love) ✍🏻", content:"Writing poetries is not easy for me. ..." },
+  { title:"A Wish for You 💗", content:"Geet, On your special day, I just want..." },
+  { title:"A Note for You, Geet — Your Heart Deserves Happiness 💝", content:"Geet, I know sometimes your heart..." },
 ];
 
-let i = 0;
+let i=0;
 const title = document.getElementById("page-title");
 const content = document.getElementById("page-content");
 
-function renderPage() {
+function renderPage(){
   title.innerText = pages[i].title;
   content.innerText = pages[i].content;
   content.scrollTop = 0;
 }
 
-function nextPage() { if (i < pages.length - 1) i++; renderPage(); }
-function prevPage() { if (i > 0) i--; renderPage(); }
+function nextPage(){ if(i<pages.length-1) i++; renderPage(); }
+function prevPage(){ if(i>0) i--; renderPage(); }
 </script>
 </body>
 </html>
