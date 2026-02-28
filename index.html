@@ -9,11 +9,11 @@
 
 <style>
 :root {
-  --bg:#EEF5F0;
-  --card:#BFD8C2;
-  --primary:#9CAF88;
-  --accent:#7FA58C;
-  --text:#2E4A3B;
+  --bg:#F5ECEC;        /* light maroon background */
+  --card:#D4A5A5;      /* maroon card */
+  --primary:#800000;   /* main maroon */
+  --accent:#A52A2A;    /* button maroon */
+  --text:#4B0000;      /* dark maroon text */
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -47,7 +47,7 @@ html,body{
   text-align:center;
   margin:15px;
 }
-#second-timer{display:none;font-size:2.5rem}
+#second-timer{display:none;font-size:2.5rem;font-weight:600}
 
 /* BUTTON */
 #start-btn{
@@ -225,7 +225,7 @@ const memoryImages = [
 let mi = 0;
 
 function renderMemory() {
-  memoryImage.src = memoryImages[mi]; // ✅ fixed
+  memoryImage.src = memoryImages[mi];
 }
 
 function nextMemory() {
@@ -249,8 +249,8 @@ startBtn.onclick = () => {
   renderMemory();
 
   songHBD.pause();
-  songSoft.currentTime = 0; // start from beginning
-  songSoft.play(); // ✅ plays after button click
+  songSoft.currentTime = 0;
+  songSoft.play();
 };
 
 /* NEXT SURPRISE */
@@ -263,7 +263,7 @@ function nextSurprise(){
   renderPage();
 }
 
-/* BOOK */
+/* BOOK PAGES */
 const pages = [
   {
     title: "Happy Birthday Aapi 💖",
@@ -402,6 +402,7 @@ With endless love, respect, and gratitude,
 — Vishal 🤍`
   }
 ];
+
 let i=0;
 const title=document.getElementById("page-title");
 const content=document.getElementById("page-content");
