@@ -9,102 +9,111 @@
 
 <style>
 :root {
-  --bg: #EEF5F0;
-  --card: #BFD8C2;
-  --primary: #9CAF88;
-  --accent: #7FA58C;
-  --text: #2E4A3B;
+  --bg:#EEF5F0;
+  --card:#BFD8C2;
+  --primary:#9CAF88;
+  --accent:#7FA58C;
+  --text:#2E4A3B;
 }
 
-* { margin:0; padding:0; box-sizing:border-box; }
+*{margin:0;padding:0;box-sizing:border-box;}
 
-html, body {
-  width:100%; height:100%; overflow:hidden;
+html,body{
+  width:100%;
+  height:100%;
   background:var(--bg);
   font-family:'Montserrat',sans-serif;
-  color:var(--text);
   display:flex;
   align-items:center;
   justify-content:center;
   flex-direction:column;
+  overflow:hidden;
 }
 
 /* TIMER */
-#timer3to1 { font-size:6rem; font-weight:600; color:var(--primary); }
+#timer3to1{font-size:6rem;color:var(--primary);}
 
 /* TEXT */
-#birthday-text { display:none; font-family:'Playfair Display',serif; font-size:4rem; color:var(--primary); text-align:center; }
-#sub-text { display:none; font-size:1.4rem; max-width:90%; text-align:center; margin:15px 0; }
-#second-timer { display:none; font-size:2.5rem; font-weight:600; }
+#birthday-text{
+  display:none;
+  font-family:'Playfair Display',serif;
+  font-size:4rem;
+  color:var(--primary);
+  text-align:center;
+}
+#sub-text{
+  display:none;
+  font-size:1.4rem;
+  text-align:center;
+  margin:15px;
+}
+#second-timer{display:none;font-size:2.5rem}
 
 /* BUTTON */
-#start-btn {
+#start-btn{
   display:none;
   margin-top:25px;
   padding:15px 35px;
-  border-radius:50px;
   border:none;
+  border-radius:50px;
   background:var(--accent);
-  color:white;
+  color:#fff;
   font-size:1.3rem;
-  font-weight:600;
   cursor:pointer;
 }
 
 /* BALLOONS */
-.balloon {
+.balloon{
   position:absolute;
   bottom:-50px;
   font-size:2rem;
-  animation: floatUp 6s linear forwards;
-  z-index:0;
+  animation:floatUp 6s linear forwards;
 }
-@keyframes floatUp {
-  to { transform:translateY(-110vh); opacity:0; }
+@keyframes floatUp{
+  to{transform:translateY(-110vh);opacity:0;}
 }
 
-/* BOOK & MEMORIES */
-.container {
+/* CONTAINERS */
+.container{
   display:none;
   width:75vw;
   max-width:600px;
   height:60vh;
   background:var(--card);
   border-radius:16px;
-  padding:30px;
+  padding:20px;
   text-align:center;
   flex-direction:column;
 }
 
-h1 { font-family:'Playfair Display',serif; font-size:2.6rem; color:var(--primary); }
-
-#page-content, #memory-image {
-  margin-top:15px;
-  font-size:1.3rem;
-  line-height:2.1rem;
-  max-height:32vh;
-  overflow-y:auto;
+h1{
+  font-family:'Playfair Display',serif;
+  color:var(--primary);
+  font-size:2.6rem;
 }
 
-.memory-image {
+/* IMAGE FIXED RATIO */
+.memory-image{
   width:100%;
   height:100%;
-  object-fit:cover;
+  object-fit:contain;
   border-radius:16px;
+  background:#00000010;
 }
 
-.book-buttons {
-  margin-top:20px;
+/* BUTTONS */
+.book-buttons{
+  margin-top:15px;
   display:flex;
   justify-content:space-between;
+  gap:10px;
 }
-.book-buttons button {
-  padding:10px 22px;
-  border-radius:30px;
+.book-buttons button{
+  padding:10px 18px;
   border:none;
+  border-radius:30px;
   background:var(--accent);
-  color:white;
-  font-weight:600;
+  color:#fff;
   cursor:pointer;
 }
 </style>
@@ -112,184 +121,151 @@ h1 { font-family:'Playfair Display',serif; font-size:2.6rem; color:var(--primary
 
 <body>
 
-<!-- TIMER AND TEXT -->
 <div id="timer3to1">3</div>
 <div id="birthday-text">Happy Birthday Aapi 🎉</div>
-<div id="sub-text">
-  Today a beautiful soul was born — my Aapi 💖  
-  A sister who makes life warmer just by being herself.
-</div>
+<div id="sub-text">Today a beautiful soul was born — my Aapi 💖</div>
 <div id="second-timer">15</div>
 <button id="start-btn">Open Your Surprise</button>
 
-<!-- MEMORIES CONTAINER -->
+<!-- MEMORIES -->
 <div id="memories" class="container">
-  <h1 id="memory-title">Beautiful 😍</h1>
-  <img id="memory-image" class="memory-image" src="" alt="Memory">
+  <h1>Beautiful 😍</h1>
+  <img id="memory-image" class="memory-image">
   <div class="book-buttons">
-    <button onclick="prevMemory()">⬅ Previous</button>
-    <button onclick="nextMemory()">Next ➡</button>
-    <button onclick="closeMemories()">See Your Gift 🎁</button>
+    <button onclick="prevMemory()">⬅</button>
+    <button onclick="nextMemory()">➡</button>
+    <button onclick="nextSurprise()">Next Surprise 🎁</button>
   </div>
 </div>
 
-<!-- BOOK CONTAINER -->
-<div id="book-container" class="container">
+<!-- BOOK -->
+<div id="book" class="container">
   <h1 id="page-title"></h1>
-  <div id="page-content"></div>
+  <div id="page-content" style="overflow:auto;"></div>
   <div class="book-buttons">
-    <button onclick="prevPage()">⬅ Previous</button>
-    <button onclick="nextPage()">Next ➡</button>
+    <button onclick="prevPage()">⬅</button>
+    <button onclick="nextPage()">➡</button>
   </div>
 </div>
 
 <!-- SONGS -->
 <audio id="song-hbd">
-  <source src="Happy Birthday To You Ji - Funny Hindi Birthday Song (Part 1) - Funzoa Mimi Teddy_ Krsna Solo(M4A_128K).m4a" type="audio/mpeg">
+  <source src="HAPPY_BIRTHDAY.m4a">
 </audio>
+
 <audio id="song-soft" loop>
-  <source src="Tenu Sang Rakhna(Lyrics) - Jigra(M4A_128K).m4a" type="audio/mpeg">
+  <source src="SOFT_MEMORY_SONG.m4a">
+</audio>
+
+<audio id="song-final" loop>
+  <source src="FINAL_GIFT_SONG.m4a">
 </audio>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
 <script>
-const timer3to1 = document.getElementById("timer3to1");
-const birthdayText = document.getElementById("birthday-text");
-const subText = document.getElementById("sub-text");
-const secondTimer = document.getElementById("second-timer");
-const startBtn = document.getElementById("start-btn");
+const timer=document.getElementById("timer3to1");
+const startBtn=document.getElementById("start-btn");
+const birthdayText=document.getElementById("birthday-text");
+const subText=document.getElementById("sub-text");
+const secondTimer=document.getElementById("second-timer");
 
-const memories = document.getElementById("memories");
-const memoryImage = document.getElementById("memory-image");
+const memories=document.getElementById("memories");
+const book=document.getElementById("book");
+const memoryImage=document.getElementById("memory-image");
 
-const book = document.getElementById("book-container");
+const songHBD=document.getElementById("song-hbd");
+const songSoft=document.getElementById("song-soft");
+const songFinal=document.getElementById("song-final");
 
-const songHBD = document.getElementById("song-hbd");
-const songSoft = document.getElementById("song-soft");
-
-let count = 3;
-const mainTimer = setInterval(() => {
-  count--;
-  if (count > 0) timer3to1.innerText = count;
-  else {
-    clearInterval(mainTimer);
-    timer3to1.style.display = "none";
-    birthdayText.style.display = "block";
-    subText.style.display = "block";
-    secondTimer.style.display = "block";
+/* COUNTDOWN */
+let c=3;
+const interval=setInterval(()=>{
+  c--;
+  timer.innerText=c;
+  if(c===0){
+    clearInterval(interval);
+    timer.style.display="none";
+    birthdayText.style.display="block";
+    subText.style.display="block";
+    secondTimer.style.display="block";
     confetti();
     balloons();
-    startSecond();
+    songHBD.play();
+    let s=15;
+    const t=setInterval(()=>{
+      s--;
+      secondTimer.innerText=s;
+      if(s<0){
+        clearInterval(t);
+        startBtn.style.display="inline-block";
+      }
+    },1000);
   }
-}, 1000);
+},1000);
 
-function startSecond() {
-  let s = 15;
-  secondTimer.innerText = s;
-  const t = setInterval(() => {
-    s--;
-    if (s >= 0) secondTimer.innerText = s;
-    else {
-      clearInterval(t);
-      startBtn.style.display = "inline-block";
-    }
-  }, 1000);
-}
-
-// MEMORY IMAGES
-const memoryImages = [
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/IMG_20260228_221841_918.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/IMG_20260228_221844_114.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/IMG_20260228_221847_154.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/IMG_20260228_222658_400.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/IMG_20260228_222701_267.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/IMG_20260228_222704_156.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/IMG_20260228_222712_241.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/IMG_20260228_222715_655.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/Snapchat-1104921818.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/Snapchat-1124094718.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/Snapchat-1452525617.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/Snapchat-1618746566.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/Snapchat-212501704.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/Snapchat-677042592.jpg"
+/* MEMORY IMAGES */
+const images=[
+ "IMG1.jpg","IMG2.jpg","IMG3.jpg","IMG4.jpg","IMG5.jpg",
+ "IMG6.jpg","IMG7.jpg","IMG8.jpg","IMG9.jpg","IMG10.jpg",
+ "IMG11.jpg","IMG12.jpg","IMG13.jpg","IMG14.jpg","IMG15.jpg"
 ];
-let memIndex = 0;
+let mi=0;
 
-function renderMemory() {
-  memoryImage.src = memoryImages[memIndex];
-}
+function renderMemory(){memoryImage.src=images[mi];}
+function nextMemory(){if(mi<images.length-1)mi++;renderMemory();}
+function prevMemory(){if(mi>0)mi--;renderMemory();}
 
-function nextMemory() {
-  if(memIndex < memoryImages.length - 1) memIndex++;
-  renderMemory();
-}
-function prevMemory() {
-  if(memIndex > 0) memIndex--;
-  renderMemory();
-}
+/* OPEN MEMORIES */
+startBtn.onclick=()=>{
+  birthdayText.style.display="none";
+  subText.style.display="none";
+  secondTimer.style.display="none";
+  startBtn.style.display="none";
 
-function closeMemories() {
-  memories.style.display = "none";
-  book.style.display = "flex";
-  i = 0;
-  renderPage();
-}
-
-// OPEN MEMORIES
-startBtn.onclick = () => {
-  birthdayText.style.display = "none";
-  subText.style.display = "none";
-  secondTimer.style.display = "none";
-  startBtn.style.display = "none";
-
-  memories.style.display = "flex";
-  memories.style.flexDirection = "column";
-  memIndex = 0;
+  memories.style.display="flex";
   renderMemory();
 
-  songSoft.currentTime = 0;
+  songHBD.pause();
   songSoft.play();
 };
 
-function balloons() {
-  setInterval(() => {
-    const b = document.createElement("div");
-    b.className = "balloon";
-    b.innerHTML = "🎈";
-    b.style.left = Math.random() * 90 + "vw";
-    document.body.appendChild(b);
-    setTimeout(() => b.remove(), 6000);
-  }, 500);
+/* NEXT SURPRISE */
+function nextSurprise(){
+  songSoft.pause();
+  songFinal.play();
+  memories.style.display="none";
+  book.style.display="flex";
+  renderPage();
 }
 
-/* BOOK DATA */
-const pages = [
-  { title: "Happy Birthday Aapi 💖", content: `Hiii my dearest Aapi 🎂🎈 ...` },
-  { title: "My Sister by Heart 🤍", content: `Aapi, You are not my sister by blood ...` },
-  { title: "Thank You for Being There 🌸", content: `Aapi, There are moments in life ...` },
-  { title: "You Changed Me 💫", content: `Aapi, You may not realize this ...` },
-  { title: "I Admire You So Much 🤍", content: `Aapi, I admire you more than I can express ...` },
-  { title: "A Promise From My Heart 💖", content: `Aapi, Just like you chose to support me ...` },
-  { title: "Once Again 🎉", content: `Happy Birthday once again, my dear Aapi ...` }
+/* BOOK */
+const pages=[
+ {title:"Happy Birthday Aapi 💖",content:"Long loving text here..."},
+ {title:"My Sister by Heart 🤍",content:"More love here..."},
+ {title:"Forever Grateful 🌸",content:"Even more love..."}
 ];
+let i=0;
+const title=document.getElementById("page-title");
+const content=document.getElementById("page-content");
 
-let i = 0;
-const title = document.getElementById("page-title");
-const content = document.getElementById("page-content");
-
-function renderPage() {
-  title.innerText = pages[i].title;
-  content.innerText = pages[i].content;
-  content.scrollTop = 0;
+function renderPage(){
+  title.innerText=pages[i].title;
+  content.innerText=pages[i].content;
 }
+function nextPage(){if(i<pages.length-1)i++;renderPage();}
+function prevPage(){if(i>0)i--;renderPage();}
 
-function nextPage() {
-  if(i < pages.length - 1) i++;
-  renderPage();
-}
-function prevPage() {
-  if(i > 0) i--;
-  renderPage();
+/* BALLOONS */
+function balloons(){
+  setInterval(()=>{
+    const b=document.createElement("div");
+    b.className="balloon";
+    b.innerText="🎈";
+    b.style.left=Math.random()*90+"vw";
+    document.body.appendChild(b);
+    setTimeout(()=>b.remove(),6000);
+  },500);
 }
 </script>
 
