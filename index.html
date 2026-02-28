@@ -221,32 +221,44 @@ const memoryImages = [
   "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/Snapchat-212501704.jpg",
   "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/Snapchat-677042592.jpg"
 ];
-let mi=0;
+let mi = 0;
 
-function renderMemory(){memoryImage.src=images[mi];}
-function nextMemory(){if(mi<images.length-1)mi++;renderMemory();}
-function prevMemory(){if(mi>0)mi--;renderMemory();}
+function renderMemory() {
+  memoryImage.src = memoryImages[mi]; // ✅ fixed
+}
+
+function nextMemory() {
+  if(mi < memoryImages.length - 1) mi++;
+  renderMemory();
+}
+
+function prevMemory() {
+  if(mi > 0) mi--;
+  renderMemory();
+}
 
 /* OPEN MEMORIES */
-startBtn.onclick=()=>{
-  birthdayText.style.display="none";
-  subText.style.display="none";
-  secondTimer.style.display="none";
-  startBtn.style.display="none";
+startBtn.onclick = () => {
+  birthdayText.style.display = "none";
+  subText.style.display = "none";
+  secondTimer.style.display = "none";
+  startBtn.style.display = "none";
 
-  memories.style.display="flex";
+  memories.style.display = "flex";
   renderMemory();
 
   songHBD.pause();
-  songSoft.play();
+  songSoft.currentTime = 0; // start from beginning
+  songSoft.play(); // ✅ plays after button click
 };
 
 /* NEXT SURPRISE */
 function nextSurprise(){
   songSoft.pause();
+  songFinal.currentTime = 0;
   songFinal.play();
-  memories.style.display="none";
-  book.style.display="flex";
+  memories.style.display = "none";
+  book.style.display = "flex";
   renderPage();
 }
 
