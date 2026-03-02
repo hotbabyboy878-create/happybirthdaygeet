@@ -3,429 +3,348 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Aapi</title>
+<title>Happy Birthday Geet</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --bg:#F5ECEC;        /* light maroon background */
-  --card:#D4A5A5;      /* maroon card */
-  --primary:#800000;   /* main maroon */
-  --accent:#A52A2A;    /* button maroon */
-  --text:#4B0000;      /* dark maroon text */
+  --bg: #EEF5F0;
+  --card: #BFD8C2;
+  --primary: #9CAF88;
+  --accent: #7FA58C;
+  --text: #2E4A3B;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;}
+* { margin:0; padding:0; box-sizing:border-box; }
 
-html,body{
-  width:100%;
-  height:100%;
+html, body {
+  width:100%; height:100%; overflow:hidden;
   background:var(--bg);
   font-family:'Montserrat',sans-serif;
+  color:var(--text);
   display:flex;
   align-items:center;
   justify-content:center;
   flex-direction:column;
-  overflow:hidden;
 }
 
 /* TIMER */
-#timer3to1{font-size:6rem;color:var(--primary);}
+#timer3to1 { font-size:6rem; font-weight:600; color:var(--primary); }
 
 /* TEXT */
-#birthday-text{
-  display:none;
-  font-family:'Playfair Display',serif;
-  font-size:4rem;
-  color:var(--primary);
-  text-align:center;
-}
-#sub-text{
-  display:none;
-  font-size:1.4rem;
-  text-align:center;
-  margin:15px;
-}
-#second-timer{display:none;font-size:2.5rem;font-weight:600}
+#birthday-text { display:none; font-family:'Playfair Display',serif; font-size:4rem; color:var(--primary); text-align:center; }
+#sub-text { display:none; font-size:1.4rem; max-width:90%; text-align:center; margin:15px 0; }
+#second-timer { display:none; font-size:2.5rem; font-weight:600; }
 
 /* BUTTON */
-#start-btn{
-  display:none;
-  margin-top:25px;
-  padding:15px 35px;
-  border:none;
-  border-radius:50px;
-  background:var(--accent);
-  color:#fff;
-  font-size:1.3rem;
-  cursor:pointer;
-}
+#start-btn { display:none; margin-top:25px; padding:15px 35px; border-radius:50px; border:none; background:var(--accent); color:white; font-size:1.3rem; font-weight:600; cursor:pointer; }
 
 /* BALLOONS */
-.balloon{
-  position:absolute;
-  bottom:-50px;
-  font-size:2rem;
-  animation:floatUp 6s linear forwards;
-}
-@keyframes floatUp{
-  to{transform:translateY(-110vh);opacity:0;}
-}
+.balloon { position:absolute; bottom:-50px; font-size:2rem; animation: floatUp 6s linear forwards; z-index:0; }
+@keyframes floatUp { to { transform:translateY(-110vh); opacity:0; } }
 
-/* CONTAINERS */
-.container{
-  display:none;
-  width:75vw;
-  max-width:600px;
-  height:60vh;
-  background:var(--card);
-  border-radius:16px;
-  padding:20px;
-  text-align:center;
-  flex-direction:column;
-}
+/* BOOK */
+#book-container { display:none; width:75vw; max-width:600px; height:60vh; background:var(--card); border-radius:16px; padding:30px; text-align:center; }
+#page-title { font-family:'Playfair Display',serif; font-size:2.6rem; color:var(--primary); }
+#page-content { margin-top:15px; font-size:1.3rem; line-height:2.1rem; max-height:32vh; overflow-y:auto; }
+.book-buttons { margin-top:20px; display:flex; justify-content:space-between; }
+.book-buttons button { padding:10px 22px; border-radius:30px; border:none; background:var(--accent); color:white; font-weight:600; cursor:pointer; }
 
-h1{
-  font-family:'Playfair Display',serif;
-  color:var(--primary);
-  font-size:2.6rem;
-}
-
-/* IMAGE FIXED RATIO */
-.memory-image{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  border-radius:16px;
-  background:#00000010;
-}
-
-/* BUTTONS */
-.book-buttons{
-  margin-top:15px;
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-}
-.book-buttons button{
-  padding:10px 18px;
-  border:none;
-  border-radius:30px;
-  background:var(--accent);
-  color:#fff;
-  cursor:pointer;
-}
 </style>
 </head>
 
 <body>
 
 <div id="timer3to1">3</div>
-<div id="birthday-text">Happy Birthday Aapi 🎉</div>
-<div id="sub-text">Today a beautiful soul was born — my Aapi 💖  
-  A sister who makes life warmer just by being herself.</div>
+<div id="birthday-text">Happy Birthday Geet</div>
+<div id="sub-text">Today a beautiful lady was born and her name is Geet and even she is not aware of it</div>
 <div id="second-timer">15</div>
 <button id="start-btn">Open Your Surprise</button>
 
-<!-- MEMORIES -->
-<div id="memories" class="container">
-  <h1>Beautiful 😍</h1>
-  <img id="memory-image" class="memory-image">
-  <div class="book-buttons">
-    <button onclick="prevMemory()">⬅</button>
-    <button onclick="nextMemory()">➡</button>
-    <button onclick="nextSurprise()">Next Surprise 🎁</button>
-  </div>
-</div>
-
-<!-- BOOK -->
-<div id="book" class="container">
+<div id="book-container">
   <h1 id="page-title"></h1>
-  <div id="page-content" style="overflow:auto;"></div>
+  <div id="page-content"></div>
   <div class="book-buttons">
-    <button onclick="prevPage()">⬅</button>
-    <button onclick="nextPage()">➡</button>
+    <button onclick="prevPage()">⬅ Previous</button>
+    <button onclick="nextPage()">Next ➡</button>
   </div>
 </div>
 
 <!-- SONGS -->
 <audio id="song-hbd">
-  <source src="HAPPY_BIRTHDAY.m4a">
+  <source src="HAPPY_BIRTHDAY_SONG_URL.mp3" type="audio/mpeg">
 </audio>
-
-<audio id="song-soft" loop>
-  <source src="Lae Dooba - Lyrics _ Mainu Ishq Tera Lae Dooba _ Lae Dooba Song _ Lae Dooba Lyrics Song(M4A_128K).m4a">
-</audio>
-
-<audio id="song-final" loop>
-  <source src="Tenu Sang Rakhna(Lyrics) - Jigra(M4A_128K).m4a">
+<audio id="song-blue" loop>
+  <source src="BLUE_SONG_URL.mp3" type="audio/mpeg">
 </audio>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
 <script>
-const timer=document.getElementById("timer3to1");
-const startBtn=document.getElementById("start-btn");
-const birthdayText=document.getElementById("birthday-text");
-const subText=document.getElementById("sub-text");
-const secondTimer=document.getElementById("second-timer");
+const timer3to1 = document.getElementById("timer3to1");
+const birthdayText = document.getElementById("birthday-text");
+const subText = document.getElementById("sub-text");
+const secondTimer = document.getElementById("second-timer");
+const startBtn = document.getElementById("start-btn");
+const book = document.getElementById("book-container");
 
-const memories=document.getElementById("memories");
-const book=document.getElementById("book");
-const memoryImage=document.getElementById("memory-image");
+const songHBD = document.getElementById("song-hbd");
+const songBlue = document.getElementById("song-blue");
 
-const songHBD=document.getElementById("song-hbd");
-const songSoft=document.getElementById("song-soft");
-const songFinal=document.getElementById("song-final");
-
-/* COUNTDOWN */
-let c=3;
-const interval=setInterval(()=>{
-  c--;
-  timer.innerText=c;
-  if(c===0){
-    clearInterval(interval);
-    timer.style.display="none";
-    birthdayText.style.display="block";
-    subText.style.display="block";
-    secondTimer.style.display="block";
+let count = 3;
+const mainTimer = setInterval(() => {
+  count--;
+  if(count>0) timer3to1.innerText = count;
+  else {
+    clearInterval(mainTimer);
+    timer3to1.style.display = "none";
+    birthdayText.style.display = "block";
+    subText.style.display = "block";
+    secondTimer.style.display = "block";
     confetti();
     balloons();
-    songHBD.play();
-    let s=15;
-    const t=setInterval(()=>{
-      s--;
-      secondTimer.innerText=s;
-      if(s<0){
-        clearInterval(t);
-        startBtn.style.display="inline-block";
-      }
-    },1000);
+    startSecond();
+    songHBD.play(); // play Happy Birthday song
   }
-},1000);
+}, 1000);
 
-/* MEMORY IMAGES */
-const memoryImages = [
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/IMG_20260228_221841_918.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/IMG_20260228_221844_114.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/IMG_20260228_221847_154.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/IMG_20260228_222658_400.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/IMG_20260228_222701_267.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/IMG_20260228_222704_156.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/IMG_20260228_222712_241.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/IMG_20260228_222715_655.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/Snapchat-1104921818.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/Snapchat-1124094718.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/Snapchat-1452525617.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/Snapchat-1618746566.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/Snapchat-212501704.jpg",
-  "https://raw.githubusercontent.com/hotbabyboy878-create/happybirthdaygeet/refs/heads/main/Snapchat-677042592.jpg"
-];
-let mi = 0;
-
-function renderMemory() {
-  memoryImage.src = memoryImages[mi];
+function startSecond() {
+  let s = 15;
+  secondTimer.innerText = s;
+  const t = setInterval(() => {
+    s--;
+    if(s >= 0) secondTimer.innerText = s;
+    else {
+      clearInterval(t);
+      startBtn.style.display = "inline-block";
+    }
+  }, 1000);
 }
 
-function nextMemory() {
-  if(mi < memoryImages.length - 1) mi++;
-  renderMemory();
-}
-
-function prevMemory() {
-  if(mi > 0) mi--;
-  renderMemory();
-}
-
-/* OPEN MEMORIES */
 startBtn.onclick = () => {
   birthdayText.style.display = "none";
   subText.style.display = "none";
   secondTimer.style.display = "none";
   startBtn.style.display = "none";
+  book.style.display = "block";
 
-  memories.style.display = "flex";
-  renderMemory();
+  songHBD.pause();      // stop HBD song
+  songBlue.play();      // play Blue song
 
-  songHBD.pause();
-  songSoft.currentTime = 0;
-  songSoft.play();
+  renderPage();
 };
 
-/* NEXT SURPRISE */
-function nextSurprise(){
-  songSoft.pause();
-  songFinal.currentTime = 0;
-  songFinal.play();
-  memories.style.display = "none";
-  book.style.display = "flex";
-  renderPage();
-}
-
-/* BOOK PAGES */
-const pages = [
-  {
-    title: "Happy Birthday Aapi 💖",
-    content: `Hiii my dearest Aapi 🎂🎈
-Happy Birthday to someone who may not be connected to me by blood,
-but is deeply connected to my heart.
-People say family is defined by blood,
-but you proved to me that family is actually defined by love, care, and presence.
-You are my sister not because life decided it for us,
-but because my heart chose you.
-Today is your special day, and I want you to know how incredibly grateful I am to have you in my life.
-You are someone who came into my life quietly, but stayed in a way that changed me forever.
-Your presence has brought warmth, comfort, and strength to my journey.
-This little gift is my way of saying thank you —
-thank you for existing,
-thank you for caring,
-and thank you for being my Aapi.`
-  },
-  {
-    title: "My Sister by Heart 🤍",
-    content: `Aapi,
-You are not my sister by blood, but you are my sister by heart,
-and that bond feels stronger than many blood relationships.
-What we share is something pure, genuine, and deeply meaningful to me.
-You chose to care for me, to support me, and to stand by me —
-and that choice means everything.
-You became someone I trust, someone I respect,
-and someone I feel safe around.
-You didn’t have to do anything for me, yet you did so much.
-You didn’t owe me your time, yet you gave it generously.
-You didn’t have to believe in me, yet you always did.
-That is why you are my sister —
-not by chance, but by choice.`
-  },
-  {
-    title: "Thank You for Being There 🌸",
-    content: `Aapi,
-There are moments in life when support matters more than words,
-and you were always there in those moments.
-You supported me when I felt unsure.
-You stood by me when things were difficult.
-You helped me feel less alone without ever making me feel weak.
-Thank you for listening to me patiently.
-Thank you for understanding me even when I couldn’t explain myself properly.
-Thank you for guiding me when I felt lost.
-Every small thing you did for me mattered.
-Every word of encouragement,
-every moment of concern,
-every silent act of care —
-I noticed it all, and I carry it with me every day.
-I am truly thankful for everything you have done for me,
-from the smallest gesture to the biggest support.`
-  },
-  {
-    title: "You Changed Me 💫",
-    content: `Aapi,
-You may not realize this, but your support has played a big role
-in shaping the person I am becoming.
-When I doubted myself, you reminded me of my worth.
-When I felt low, you helped me stand again.
-You didn’t try to control my path —
-you trusted me.
-You didn’t pressure me —
-you encouraged me.
-You didn’t judge me —
-you understood me.
-That kind of support is rare.
-It comes from a good heart, and yours is truly special.
-I have learned so much from you —
-about patience, kindness, and strength.
-Because of you, I learned that real support doesn’t make noise.
-It stays, it listens, and it lifts quietly.`
-  },
-  {
-    title: "I Admire You So Much 🤍",
-    content: `Aapi,
-I admire you more than I can express in words.
-I admire your strength, your maturity,
-and the way you handle responsibilities with grace.
-You carry so much,
-yet you still manage to care for others with kindness.
-You are strong even when life is heavy.
-You are calm even when things are stressful.
-You are kind even when the world isn’t always kind back.
-I want you to know that you are deeply respected,
-deeply valued,
-and deeply appreciated.
-You deserve happiness, peace,
-and success in every part of your life.
-Never underestimate yourself.
-You are doing better than you think,
-and you are more amazing than you realize.`
-  },
-  {
-    title: "A Promise From My Heart 💖",
-    content: `Aapi,
-Just like you chose to support me,
-I choose to always stand by you.
-This is my promise —
-not out of obligation,
-but out of love and gratitude.
-No matter where life takes us,
-you will always have someone who cares for you,
-who respects you,
-and who wishes the best for you.
-If you ever need someone to listen,
-to support,
-or to simply be there —
-I will be there.
-You may not be my blood-related sister,
-but you are my family in the truest sense.
-And family is not about genetics —
-it’s about loyalty, care, and love.
-I will always be thankful to life
-for bringing you into my journey.`
-  },
-  {
-    title: "Once Again 🎉",
-    content: `Happy Birthday once again, my dear Aapi 💖
-I wish you a life filled with peace,
-happiness,
-and success.
-I wish you good health,
-calm days,
-and nights filled with contentment.
-I wish you people who value you,
-respect you,
-and treat you with the love you deserve.
-May your kindness return to you multiplied.
-May your efforts never go unnoticed.
-May your heart always feel light and safe.
-Thank you for being my sister by heart.
-Thank you for being my strength.
-Thank you for being you.
-With endless love, respect, and gratitude,
-— Vishal 🤍`
-  }
-];
-
-let i=0;
-const title=document.getElementById("page-title");
-const content=document.getElementById("page-content");
-
-function renderPage(){
-  title.innerText=pages[i].title;
-  content.innerText=pages[i].content;
-}
-function nextPage(){if(i<pages.length-1)i++;renderPage();}
-function prevPage(){if(i>0)i--;renderPage();}
-
-/* BALLOONS */
-function balloons(){
-  setInterval(()=>{
-    const b=document.createElement("div");
-    b.className="balloon";
-    b.innerText="🎈";
-    b.style.left=Math.random()*90+"vw";
+function balloons() {
+  setInterval(() => {
+    const b = document.createElement("div");
+    b.className = "balloon";
+    b.innerHTML = "🎈";
+    b.style.left = Math.random()*90 + "vw";
     document.body.appendChild(b);
     setTimeout(()=>b.remove(),6000);
   },500);
 }
-</script>
 
+/* BOOK DATA */
+const pages = [
+  { title:"Happy Birthday Geet 💖", content:`Hiii Geet Rani Happy Birthday 🎈🎂, How aree youu Geet? I hope you are fine and doing well. I have made this website to wish you a very happy birthday and this is the only way to wish you and one of my favorite way to wish you, so Happy Birthday Geet. Always stay happy and keep smiling because you look even more beautiful when you are smiling..
+And I will always pray for your betterment, success. Goodluck for the Board Exams.` },
+  { title:"Why do I love you? 💗", content:`Okay so why do I love you? This time I'm saying this openly last time I said that I liked you but actually I love you and It's not only because that you are beautiful there are many reasons and the very main reason is that you are the first girl in my life whom I love and first love cannot be forgotten. You know the backstory that where I first saw you then fell in love with you but couldn't tell you that I was in love with you and then someone else stole you from mee and that's where I was heartbroken for the first time ever in my life and I still think that it was all my fault that I should have told you about it but I was too scared even I'm scared right now making this gift for you but I don't wanna lose you this time that's why I'm doing all this for you.` },
+  { title:"What can I do for you? 💝", content:`Hey Geet,
+I hope you take a moment to read this slowly,
+because these are all the thoughts I’ve kept in my heart for so long.
+I don’t know how to say them perfectly,
+but I want to try, because you deserve to know everything I feel.
+To me, you are not just someone I love or care about.
+You are someone who has become my world,
+someone who quietly fills my thoughts and my days,
+someone who makes life feel lighter just by existing.
+You are my happiness, my peace, my reason to smile,
+and even my reason to try to be better every single day.
+When I think about you, I feel a warmth that I can’t explain.
+When I see you smile even in my imagination 
+it feels like everything around me brightens.
+When you laugh, my heart feels lighter.
+When you are sad, I wish I could take that sadness for you.
+I want you to know that I can do anything for you.
+Not because I am perfect or strong,
+but because my heart is yours in the purest way.
+I am willing to change myself for you,
+to learn and to be someone worthy of your trust.
+If you want me to wait, I will wait.
+If you want me to listen, I will listen.
+If you want me to support you silently, I will support you quietly,
+never complaining, never asking for anything in return.
+I want to be the kind of person who makes your life easier,
+who makes you feel safe and calm.
+I want to be someone who celebrates your successes,
+and who silently lifts you when things feel heavy.
+I want to be someone who reminds you of your worth
+every single day, without expecting anything in return.
+I am ready to become whatever you need me to be.
+If you want me to be stronger, I will become stronger.
+If you want me to be calmer, I will learn patience.
+If you want me to be kinder, I will practice kindness.
+If you want me to wait, I will wait patiently,
+because loving you is not about me —
+it’s about what makes you feel safe, happy, and loved.
+I don’t want anything from you except your happiness.
+I don’t want to rush you,
+I don’t want to pressure you,
+and I don’t want to force my place in your life.
+I just want to be someone who genuinely cares about you,
+someone you can trust, someone who never judges,
+someone who silently hopes for your smile every day.
+Even if life takes us apart,
+even if time changes everything around us,
+a part of my heart will always be yours.
+I will always wish you happiness,
+I will always wish you peace,
+I will always wish you love in every corner of your life.
+You are everything to me, Geet.
+Not because I want to own you,
+not because I need something back,
+but because loving you feels natural to my heart.
+Because thinking about you inspires me to be a better person,
+and because my world feels brighter with you in it.
+I don’t expect anything from you.
+I don’t expect love in return,
+I don’t expect a promise,
+and I don’t expect attention.
+All I want is for you to know
+that there is someone in this world who truly cares for you,
+someone whose thoughts are quietly filled with you,
+someone whose heart beats a little faster
+just thinking of your smile.
+I will do anything for you.
+I will become whatever you need me to be.
+I will try my hardest to make you feel loved,
+safe, happy, and appreciated every single day.
+Even if you never notice,
+even if you never say it out loud,
+my heart will silently hope for you.
+You are my first thought in the morning,
+and my last thought at night.
+You are my quiet hope in moments of doubt,
+and my calm when everything feels heavy.
+Even if I can’t be near you always,
+even if life feels unfair,
+my heart will always belong to you
+completely, sincerely, and honestly.
+I hope one day you can see it
+how much you mean to me,
+how much I care,
+and how much I want to make you feel happy in every way.
+
+— From Vishal who would do anything for you,
+and who loves you more than words could ever say.` },
+  { title:"My Poetries for You ✍🏻", content:`I just want you to know something.
+Writing poetries is not easy for me. Not at all.
+Every word, every line, every little thing I wrote for you...
+I had to think about it, feel it, and sometimes I spent hours
+trying to make it sound even a little bit right.
+When I wrote those poetries for you,
+it was the very first time I tried to show my feelings.
+I didn’t know if you’d ever read them,
+or if you’d even care.
+But I didn’t write them for that.
+I wrote them because I had to. Because my heart was telling me to.
+Those poetries were my first act of love for you.
+It was my way of saying (quietly, nervously,)
+“You are important to me. You mean something to me.”
+Even if the words weren’t perfect, even if the rhymes were messy,
+they were all for you. Only for you.
+Honestly… it took a lot of courage for me.
+I was scared you’d laugh at them or not even notice.
+But I did it anyway, because loving you felt bigger than my fear.
+Every line I wrote was me trying to reach your heart,
+even if I couldn’t say it out loud.
+Every poetry I wrote,
+every little rhyme or verse,
+was my way of trying to make you smile.
+My way of telling you… that my heart is yours,
+even when I didn’t know how else to say it.
+Even now, thinking back…
+I feel proud that I tried.
+Because that was the first thing I ever did for you.
+The first way I showed my love.
+And it was real.` },
+  { title:"A Wish for You 💗", content:`Geet,
+On your special day, I just want to tell you how truly amazing you are.
+I wish that every moment of your life is filled with happiness,
+that your heart is always light,
+and that your smile never fades.
+I wish you endless laughter, love that makes you feel warm inside,
+and friends and people around you who truly care about you.
+I wish you courage for every challenge,
+and strength to overcome every obstacle in your life.
+I hope your dreams come true,
+both the small ones that make you smile quietly
+and the big ones that make your heart race with excitement.
+I hope you find joy in the little things,
+peace in the quiet moments,
+and love in every corner of your life.
+You deserve every happiness in the world,
+every moment of magic, every reason to celebrate yourself.
+May this year bring you new adventures,
+beautiful memories, and endless reasons to be happy.
+I wish for you a life full of warmth,
+friends and family who cherish you,
+and all the love you give to others returned to you a thousand times.
+Happy Birthday, Geet 🎉💖
+May your days always be bright,
+your heart always be full,
+and your life always be as beautiful as your smile.` },
+  { title:"A Note for You, Geet 💝", content:`Geet,
+I know sometimes your heart still carries shadows of the past,
+memories that make it hard to move forward.
+I want you to know it’s okay to feel that,
+it’s okay to miss what was,
+but your heart is meant for so much more than yesterday.
+You are beautiful, kind, strong, and full of light
+and you deserve someone who sees all of that,
+someone who cherishes you for exactly who you are.
+The past can’t take away your sparkle,
+it can’t stop you from finding joy again.
+I want you to let yourself breathe, to let yourself heal,
+and to believe that the future can be brighter than the past.
+You don’t have to be weighed down by old memories.
+You can choose happiness, laughter, and love
+the kind that lifts you up, makes your heart feel safe, and makes your smile shine effortlessly.
+I promise, Geet, if you let your heart open even a little,
+I will be there quietly, patiently,
+to make you feel valued, happy, and loved.
+I won’t rush you. I won’t pressure you.
+I will simply be someone who cares for you completely,
+who celebrates every part of you,
+and who will always be by your side.
+The past doesn’t define you.
+Your story is still being written,
+and I hope I can be a part of the chapters that bring you happiness.
+You are worthy of love that heals,
+worthy of joy that never fades,
+and worthy of a heart that will hold you gently and sincerely.
+So please, Geet, don’t let yesterday hold you back.
+You deserve to laugh freely, to dream boldly,
+and to let someone love you as deeply as you deserve.
+Your heart is precious,
+and I’ll be here, hoping to be the one who makes your days brighter,
+your smiles wider, and your life sweeter.` },
+];
+
+let i=0;
+const title = document.getElementById("page-title");
+const content = document.getElementById("page-content");
+
+function renderPage() {
+  title.innerText = pages[i].title;
+  content.innerText = pages[i].content;
+  content.scrollTop = 0;
+}
+
+function nextPage(){ if(i<pages.length-1) i++; renderPage(); }
+function prevPage(){ if(i>0) i--; renderPage(); }
+
+</script>
 </body>
 </html>
